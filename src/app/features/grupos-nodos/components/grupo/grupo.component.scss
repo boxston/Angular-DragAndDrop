@@ -6,14 +6,25 @@ mat-list {
     margin-bottom: 20px;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
+    padding: 10px 0px !important;
 }
 
 mat-list mat-list-item {
-    box-sizing: border-box;
-    padding-left: 20px;
     cursor: pointer;
+    border-bottom: 1px inset;
+    height: 60px;
 }
 
+mat-list mat-list-item div {
+    background-color: transparent;
+}
+
+span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 
 span label{
     display: flex;
@@ -32,7 +43,7 @@ span label:hover{
     background-color: rgba(255, 0, 0, 0.105);
 }
 
-div {
+section {
     border-radius: 8px;
     min-width: 200px;
     background-color: white;
@@ -52,6 +63,7 @@ div {
     height: 300px;
     overflow: auto;
     padding: 20px;
+    box-sizing: border-box;
     background-color: white; /* Fondo claro para el contenedor */
 }
   

@@ -1,23 +1,36 @@
-<div 
-    style="
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        align-items: flex-start;
-        width: 50%;
-        background-color: red;
-        box-sizing: border-box;
-        padding: 40px;
-    "
-    cdkDropListGroup
->
-    @for (grupo of gruposNodosStore.grupos(); track grupo.id) {
-        <grupo
-            [nodosList]="grupo.content"
-            [dropListGroup]="dropListGroupIds"
-            [dropListId]="'grupo-' + grupo.id"
-            (onDrop)="drop($event)" 
-        ></grupo>
-    }
-</div>
+<main style="
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+">
+    <div style="width: 100%; background-color: blueviolet; height: 100%;"></div>
+    <div 
+        style="
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            align-items: flex-start;
+            width: calc(100% - 400px);
+            min-width: calc(100% - 400px);
+            height: 100%;
+            background-color: red;
+            box-sizing: border-box;
+            padding: 40px;
+        "
+        cdkDropListGroup
+    >
+        @for (grupo of gruposNodosStore.grupos(); track grupo.id) {
+            <grupo
+                [customStyle]="{'width': '250px', 'height': '300px'}"
+                [grupoName]="grupo.name"
+                [nodosList]="grupo.content"
+                [dropListGroup]="dropListGroupIds"
+                [dropListId]="'grupo-' + grupo.id"
+                (onDrop)="drop($event)" 
+            ></grupo>
+        }
+    </div>
+</main>

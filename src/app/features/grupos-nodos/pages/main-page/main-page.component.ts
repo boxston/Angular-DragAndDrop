@@ -1,9 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { GruposNodosStore } from "../../core/store/grupos-nodos.store";
 import { GrupoComponent } from "../../components/grupo/grupo.component";
-import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import { GruposNodosService } from "../../core/services/grupos-nodos.service";
-
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 
 @Component({
     standalone: true,
@@ -53,7 +51,7 @@ export class MainPage {
             );
         }
 
-        // ✅ Usar el Store para actualizar el estado global
+        // Usar el Store para actualizar el estado global
         this.gruposNodosStore.changeNodoGroup(grupos);
     }
 }

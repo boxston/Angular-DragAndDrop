@@ -21,10 +21,9 @@ import { GruposNodosService } from "../../core/services/grupos-nodos.service";
 })
 export class GrupoComponent {
   @Input() customStyle: { [key: string]: string } = {};
+  @Input() grupoName: string = 'Grupo';
   @Input() nodosList: Nodo[] = []; // Recibe el listado de nodos
   @Input() dropListGroup: string[] = [];  // Lista de grupos conectados
   @Input() dropListId: string = '';  // ID único del grupo
-
-  @Output() onDrop = new EventEmitter<CdkDragDrop<any>>();  
-  
+  @Output() onDrop = new EventEmitter<CdkDragDrop<any>>(); // Emite cambio
 }
