@@ -1,0 +1,15 @@
+<div    
+    cdkDropList
+    [cdkDropListData]="nodosList"
+    [cdkDropListConnectedTo]="dropListGroup"
+    [id]="dropListId"
+    (cdkDropListDropped)="onDrop.emit($event)" 
+>
+    <mat-list>
+        @for (nodo of nodosList; track nodo.id) {
+            <mat-list-item
+                cdkDrag
+            >{{nodo.name}}</mat-list-item>
+        }
+    </mat-list>
+</div>

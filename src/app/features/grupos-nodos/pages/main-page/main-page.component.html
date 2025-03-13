@@ -1,0 +1,23 @@
+<div 
+    style="
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-start;
+        width: 50%;
+        background-color: red;
+        box-sizing: border-box;
+        padding: 40px;
+    "
+    cdkDropListGroup
+>
+    @for (grupo of gruposNodosStore.grupos(); track grupo.id) {
+        <grupo
+            [nodosList]="grupo.content"
+            [dropListGroup]="dropListGroupIds"
+            [dropListId]="'grupo-' + grupo.id"
+            (onDrop)="drop($event)" 
+        ></grupo>
+    }
+</div>
