@@ -26,4 +26,11 @@ export class GrupoComponent {
   @Input() dropListGroup: string[] = [];  // Lista de grupos conectados
   @Input() dropListId: string = '';  // ID único del grupo
   @Output() onDrop = new EventEmitter<CdkDragDrop<any>>(); // Emite cambio
+  @Output() deleteGroup = new EventEmitter<string>();
+  @Output() clearAllNodes = new EventEmitter<string>();
+  @Output() saveClick: EventEmitter<void> = new EventEmitter();
+
+  onSaveClick() {
+    this.saveClick.emit(); // Emite el evento cuando se hace clic en el botón
+  }
 }

@@ -39,6 +39,18 @@ export const GruposNodosStore = signalStore(
                 ))
             )
         ),
+        loadNodos: rxMethod<void>(
+            pipe(
+                switchMap(()=> gruposNodosService.getNodos().pipe(
+                    tapResponse({
+                        next: (nodos) => {
+                            patchState(store, {nodos})
+                        },
+                        error: () => {}
+                    })
+                ))
+            )
+        ),
         changeNodoGroup: (grupos: Grupo[]) => {
             patchState(store, {grupos})
         } 

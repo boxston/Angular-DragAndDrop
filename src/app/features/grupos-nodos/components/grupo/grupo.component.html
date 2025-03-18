@@ -18,9 +18,13 @@
             </mat-list-item>
         }
     </mat-list>
-    <span>
-        <label style="color: red;">Delete</label>
-        <label style="color: #00A339;">Clear All</label>
+    <span *ngIf="dropListId != 'nodos-sin-asignar'">
+        <label style="color: red; cursor: pointer;" (click)="deleteGroup.emit(dropListId)">Delete</label>
+        <label style="color: #00A339; cursor: pointer;" (click)="clearAllNodes.emit(dropListId)">Clear All</label>
+    </span>
+    
+    <span *ngIf="dropListId == 'nodos-sin-asignar'" style="width: 100%; display: flex; justify-content: center;">
+        <button mat-flat-button style="background-color: #00A339;" (click)="onSaveClick()">Guardar Todo</button> 
     </span>
 
 </section>

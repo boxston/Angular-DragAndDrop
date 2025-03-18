@@ -19,39 +19,124 @@ export class MainPage {
 
     ngOnInit() {
         this.gruposNodosStore.loadGrupos();
+        this.gruposNodosStore.loadNodos();
         this.updateDropListGroup();
     }
 
     updateDropListGroup() {
-        this.dropListGroupIds = this.gruposNodosStore.grupos().map(g => 'grupo-' + g.id);
+        this.dropListGroupIds = ["nodos-sin-asignar"].concat(
+            this.gruposNodosStore.grupos().map(g => 'grupo-' + g.id)
+        );
+    }
+
+    getUnassignedNodes() {
+        // Obtener todos los nodos
+        const allNodes = this.gruposNodosStore.nodos();
+    
+        // Obtener todos los nodos que ya están en grupos
+        const assignedNodes = this.gruposNodosStore.grupos().flatMap(g => g.content);
+    
+        // Filtrar los nodos que NO están en la lista de asignados
+        return allNodes.filter(node => !assignedNodes.some(n => n.id === node.id));
     }
 
     drop(event: CdkDragDrop<any>) {
         const { previousIndex, currentIndex, container, previousContainer } = event;
-
+    
         // Clonar el estado actual de los grupos
         const grupos = [...this.gruposNodosStore.grupos()];
-
-        // Buscar los grupos involucrados en el movimiento
-        const prevGrupo = grupos.find(g => 'grupo-' + g.id === previousContainer.id);
-        const newGrupo = grupos.find(g => 'grupo-' + g.id === container.id);
-
-        if (!prevGrupo || !newGrupo) return;
-
-        if (previousContainer === container) {
-            // Movimiento dentro del mismo grupo
-            moveItemInArray(newGrupo.content, previousIndex, currentIndex);
+    
+        if (previousContainer.id === "nodos-sin-asignar") {
+            // Mover nodo desde "Nodos sin asignar" a un grupo
+            const unassignedNodes = this.getUnassignedNodes();
+            const newGrupo = grupos.find(g => 'grupo-' + g.id === container.id);
+            if (!newGrupo) return;
+    
+            transferArrayItem(unassignedNodes, newGrupo.content, previousIndex, currentIndex);
+        } else if (container.id === "nodos-sin-asignar") {
+            // Mover nodo desde un grupo a "Nodos sin asignar"
+            const prevGrupo = grupos.find(g => 'grupo-' + g.id === previousContainer.id);
+            if (!prevGrupo) return;
+    
+            const unassignedNodes = this.getUnassignedNodes();
+    
+            transferArrayItem(prevGrupo.content, unassignedNodes, previousIndex, currentIndex);
         } else {
-            // Movimiento entre diferentes grupos
-            transferArrayItem(
-                prevGrupo.content,
-                newGrupo.content,
-                previousIndex,
-                currentIndex
-            );
+            // Movimiento entre grupos
+            const prevGrupo = grupos.find(g => 'grupo-' + g.id === previousContainer.id);
+            const newGrupo = grupos.find(g => 'grupo-' + g.id === container.id);
+            if (!prevGrupo || !newGrupo) return;
+    
+            if (previousContainer === container) {
+                moveItemInArray(newGrupo.content, previousIndex, currentIndex);
+            } else {
+                transferArrayItem(prevGrupo.content, newGrupo.content, previousIndex, currentIndex);
+            }
         }
-
-        // Usar el Store para actualizar el estado global
+    
+        // Actualizar el estado en el store
         this.gruposNodosStore.changeNodoGroup(grupos);
     }
+    
+    deleteGroup(groupIdstr: string) {
+        const groupId = +groupIdstr.split('-')[1];
+        const grupos = [...this.gruposNodosStore.grupos()];
+    
+        // Encontrar el grupo a eliminar
+        const grupoIndex = grupos.findIndex(g => g.id === groupId);
+        if (grupoIndex === -1) return;
+    
+        // Obtener nodos del grupo eliminado
+        const unassignedNodes = this.getUnassignedNodes();
+        const nodosGrupo = grupos[grupoIndex].content;
+    
+        // Devolver los nodos al grupo de "Nodos sin asignar"
+        unassignedNodes.push(...nodosGrupo);
+    
+        // Eliminar el grupo
+        grupos.splice(grupoIndex, 1);
+    
+        // Actualizar el estado en el store
+        this.gruposNodosStore.changeNodoGroup(grupos);
+    }
+    
+    clearAllNodes(groupIdstr: string) {
+        const groupId = +groupIdstr.split('-')[1];
+        const grupos = [...this.gruposNodosStore.grupos()];
+        const grupo = grupos.find(g => g.id === groupId);
+        if (!grupo) return;
+    
+        // Obtener nodos sin asignar y transferir los del grupo
+        const unassignedNodes = this.getUnassignedNodes();
+        unassignedNodes.push(...grupo.content);
+    
+        // Vaciar el grupo
+        grupo.content = [];
+    
+        // Actualizar el estado en el store
+        this.gruposNodosStore.changeNodoGroup(grupos);
+    }
+
+    saveGruposNodos() {
+        const grupos = this.gruposNodosStore.grupos(); // Obtener todos los grupos
+        // Imprimir los detalles de los grupos
+        console.log('Detalles de los Grupos:');
+        grupos.forEach(grupo => {
+            console.log(`Grupo ID: ${grupo.id}, Nombre: ${grupo.name}`);
+            console.log('Nodos del grupo:');
+            grupo.content.forEach(nodo => {
+                console.log(`  Nodo ID: ${nodo.id}, Nombre: ${nodo.name}, Direccion: ${nodo.address}`);
+            });
+            console.log('--------------------------');
+        });
+    
+        // Imprimir los nodos no asignados
+        const nodosNoAsignados = this.getUnassignedNodes();
+        console.log('Detalles de los Nodos No Asignados:');
+        nodosNoAsignados.forEach(nodo => {
+            console.log(`Nodo ID: ${nodo.id}, Nombre: ${nodo.name}`);
+        });
+        console.log('===========================');
+    }
+
 }
