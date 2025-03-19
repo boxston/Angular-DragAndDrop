@@ -80,11 +80,10 @@
                 max-height: 100%;
             "
         >
-            @for (grupo of gruposNodosStore.grupos(); track grupo.id) {
+            @for (grupo of getSortedGroups(); track grupo.id) {
                 <grupo
-                    [ngClass]="{'highlighted': isGroupHighlighted(grupo)}"
-                    style="width: 20%; min-width: 300px;"
-                    [customStyle]="{'min-width': '100%', 'height': '330px', 'background-color': isGroupHighlighted(grupo.content) ? 'yellow':''}"
+                    [ngStyle]="{'width': '20%', 'min-width': '300px'}"
+                    [customStyle]="{'min-width': '100%', 'height': '330px','background-color' : isGroupHighlighted(grupo.content) ? 'yellow':''}"
                     [grupoName]="grupo.name"
                     [nodosList]="grupo.content"
                     [dropListGroup]="dropListGroupIds"

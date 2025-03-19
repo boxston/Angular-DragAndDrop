@@ -50,6 +50,15 @@ export class MainPage {
         return allNodes.filter(node => !assignedNodes.some(n => n.id === node.id));
     }    
     
+    // Ordenar los grupos antes de renderizarlos
+    getSortedGroups(): any[] {
+        return this.gruposNodosStore.grupos().sort((a, b) => {
+            const aHighlighted = this.isGroupHighlighted(a.content);
+            const bHighlighted = this.isGroupHighlighted(b.content);
+            return (aHighlighted === bHighlighted) ? 0 : aHighlighted ? -1 : 1;
+        });
+    }
+    
     // Función para verificar si un grupo debe ser resaltado
     isGroupHighlighted(grupo: any): boolean {
         if(grupo == undefined || grupo == null) return false;
