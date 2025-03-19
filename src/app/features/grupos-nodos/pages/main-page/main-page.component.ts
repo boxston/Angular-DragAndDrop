@@ -2,12 +2,21 @@ import { Component, inject } from "@angular/core";
 import { GruposNodosStore } from "../../core/store/grupos-nodos.store";
 import { GrupoComponent } from "../../components/grupo/grupo.component";
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from "@angular/material/button";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
     standalone: true,
     selector: 'grupos-nodos-main',
     imports: [
+        CommonModule,
         GrupoComponent,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule, 
     ],
     templateUrl: './main-page.component.html',
     styleUrls: ['./main-page.component.scss'],
@@ -16,6 +25,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/dr
 export class MainPage {
     gruposNodosStore = inject(GruposNodosStore);
     dropListGroupIds: string[] = [];
+    searchQuery: string = ""; 
 
     ngOnInit() {
         this.gruposNodosStore.loadGrupos();
@@ -38,6 +48,25 @@ export class MainPage {
     
         // Filtrar los nodos que NO están en la lista de asignados
         return allNodes.filter(node => !assignedNodes.some(n => n.id === node.id));
+    }    
+    
+    // Función para verificar si un grupo debe ser resaltado
+    isGroupHighlighted(grupo: any): boolean {
+        if(grupo == undefined || grupo == null) return false;
+        if(this.searchQuery != '' && grupo.length > 1){
+            const nodesInGroup = grupo;
+            return grupo.some((node: any) => 
+                node.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+                node.address.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                node.id.toString().includes(this.searchQuery)
+            );
+        }
+        return false;
+    }
+    
+    // Función para obtener el trackBy
+    trackById(index: number, item: any): any {
+        return item.id;
     }
 
     drop(event: CdkDragDrop<any>) {
@@ -139,4 +168,27 @@ export class MainPage {
         console.log('===========================');
     }
 
+    generarIdUnico(): number {
+        const grupos = this.gruposNodosStore.grupos();
+        return grupos.length > 0 ? Math.max(...grupos.map(g => g.id)) + 1 : 1;
+    }
+      
+    addGroup() {
+        const grupos = [...this.gruposNodosStore.grupos()];  // Clonamos el estado actual de los grupos
+    
+        // Crear el nuevo grupo con un ID único (puedes usar otro método para generar un ID si es necesario)
+        const nuevoGrupo = {
+          id: this.generarIdUnico(),  // Generamos un ID único
+          name: "Grupo - Sin Nombre",               // Nombre del grupo (puede ser el que pases como parámetro)
+          content: []                 // El grupo está vacío inicialmente
+        };
+    
+        // Agregar el nuevo grupo al array de grupos
+        grupos.push(nuevoGrupo);
+    
+        // Actualizar el estado en el store
+        this.gruposNodosStore.changeNodoGroup(grupos);
+    
+        this.updateDropListGroup();
+      }
 }

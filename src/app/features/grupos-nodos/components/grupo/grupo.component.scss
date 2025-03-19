@@ -1,3 +1,7 @@
+.mat-form-field-appearance-fill .mat-input-element {
+  background-color: transparent;
+}
+
 mat-list {
     height: 100%;
     width: 100%;
@@ -13,6 +17,14 @@ mat-list mat-list-item {
     cursor: pointer;
     border-bottom: 1px inset;
     height: 60px;
+}
+
+mat-list mat-list-item:hover div{
+    color: #fafafa !important;
+}
+
+mat-list mat-list-item:hover{
+    background-color: #00A339 !important;
 }
 
 mat-list mat-list-item div {

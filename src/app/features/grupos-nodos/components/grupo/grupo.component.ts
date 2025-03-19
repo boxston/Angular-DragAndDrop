@@ -1,10 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { CdkDrag, CdkDragDrop, CdkDropList, } from "@angular/cdk/drag-drop";
 import { MatListModule } from "@angular/material/list";
 import { MatButtonModule } from "@angular/material/button";
 import { Nodo } from "../../core/interfaces/nodo.interface";
-import { GruposNodosService } from "../../core/services/grupos-nodos.service";
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   standalone: true,
@@ -15,6 +18,9 @@ import { GruposNodosService } from "../../core/services/grupos-nodos.service";
     CdkDrag,
     MatListModule,
     MatButtonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './grupo.component.html',
   styleUrls: ['./grupo.component.scss']
@@ -28,9 +34,4 @@ export class GrupoComponent {
   @Output() onDrop = new EventEmitter<CdkDragDrop<any>>(); // Emite cambio
   @Output() deleteGroup = new EventEmitter<string>();
   @Output() clearAllNodes = new EventEmitter<string>();
-  @Output() saveClick: EventEmitter<void> = new EventEmitter();
-
-  onSaveClick() {
-    this.saveClick.emit(); // Emite el evento cuando se hace clic en el botón
-  }
 }
