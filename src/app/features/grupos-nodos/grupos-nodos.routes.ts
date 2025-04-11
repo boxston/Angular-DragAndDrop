@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { MainPage } from "./pages/main-page/main-page.component";
+import { GrupoNodosPage } from "./pages/main/grupo-nodos.component";
 
 export const GRUPOS_NODOS_ROUTES: Routes = [
     {
@@ -7,7 +7,7 @@ export const GRUPOS_NODOS_ROUTES: Routes = [
         children: [
             {
                 path: '',
-                component: MainPage,
+                component: GrupoNodosPage,
                 title: 'Grupos de Nodos'
             }
         ]

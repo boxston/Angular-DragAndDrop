@@ -4,7 +4,6 @@ import { GrupoComponent } from "../../components/grupo/grupo.component";
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
-import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
@@ -18,11 +17,11 @@ import { CommonModule } from "@angular/common";
         MatButtonModule,
         FormsModule, 
     ],
-    templateUrl: './main-page.component.html',
-    styleUrls: ['./main-page.component.scss'],
+    templateUrl: './grupo-paletizado.component.html',
+    styleUrls: ['./grupo-paletizado.component.scss'],
     providers: [GruposNodosStore]
 })
-export class MainPage {
+export class GrupoPaletizadoPage {
     gruposNodosStore = inject(GruposNodosStore);
     dropListGroupIds: string[] = [];
     searchQuery: string = ""; 

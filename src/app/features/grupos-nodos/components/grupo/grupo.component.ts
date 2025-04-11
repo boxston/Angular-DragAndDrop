@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CdkDrag, CdkDragDrop, CdkDropList, } from "@angular/cdk/drag-drop";
 import { MatListModule } from "@angular/material/list";
 import { MatButtonModule } from "@angular/material/button";
-import { Nodo } from "../../core/interfaces/nodo.interface";
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
@@ -28,7 +27,6 @@ import { MatIcon } from "@angular/material/icon";
 export class GrupoComponent {
   @Input() customStyle: { [key: string]: string } = {};
   @Input() grupoName: string = 'Grupo';
-  @Input() nodosList: Nodo[] = []; // Recibe el listado de nodos
   @Input() dropListGroup: string[] = [];  // Lista de grupos conectados
   @Input() dropListId: string = '';  // ID único del grupo
   @Output() onDrop = new EventEmitter<CdkDragDrop<any>>(); // Emite cambio
