@@ -5,16 +5,18 @@ import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { GrupoCabeceraStore, GrupoDetalleStore, GrupoPaletizadoStore } from "../../core/store";
+import { GrupoPaletizadoPage } from "../../components/grupo-paletizado/grupo-paletizado.components";
 
 @Component({
     standalone: true,
     selector: 'grupo-nodos-main',
     imports: [
-        CommonModule,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-    ],
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    GrupoPaletizadoPage
+],
     templateUrl: './grupo-nodos.component.html',
     styleUrls: ['./grupo-nodos.component.scss'],
     providers: []
