@@ -1,9 +1,10 @@
 export interface Detalle {
-    id: number;
-    grupoCabeceraId: number;
+    id?: number;
+    grupoCabeceraId?: number;
     nodoDestino: number;
     activo: boolean;
     nodoCodigo: number;
-    nodoDescripcion: string;
-    usuario: string;
+    nodoDescripcion?: string;
+    nodoTipo?: number;
+    usuario?: string;
 }

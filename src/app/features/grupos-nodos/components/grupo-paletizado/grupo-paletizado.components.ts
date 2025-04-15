@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from "@angular/core";
+import { Component, computed, EventEmitter, inject, OnInit, Output } from "@angular/core";
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -9,6 +9,7 @@ import { GrupoCabeceraPage } from "../grupo-cabecera/grupo-cabecera.components";
 
 import {MatSelectModule} from '@angular/material/select';
 import { GrupoCabeceraStore, GrupoPaletizadoStore } from "../../core/store";
+import { CdkDragDrop } from "@angular/cdk/drag-drop";
 @Component({
     standalone: true,
     selector: 'grupo-paletizado',

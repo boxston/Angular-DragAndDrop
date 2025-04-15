@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Nodo } from '../interfaces';
+import { Detalle, Nodo } from '../interfaces';
 import { NodoService } from '../services/nodo.service';
 
 @Injectable({ providedIn: 'root' })
 export class NodoStore {
   private nodoService = inject(NodoService);
 
-  nodo = signal<Nodo[]>([]);
+  nodo = signal<Detalle[]>([]);
   loading = signal<boolean>(false);
 
   loadNodo() {

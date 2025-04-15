@@ -1,4 +1,11 @@
-<article class="grupo-cabecera">
+<article 
+    class="grupo-cabecera"
+    cdkDropList
+    [id]="'cabecera-'+id"
+    [cdkDropListData]="grupoDetalle()"
+    [cdkDropListConnectedTo]="getListaCabeceras()"
+    (cdkDropListDropped)="drop($event)"
+>
     <aside>
         <mat-icon>cancel</mat-icon>
     </aside>    
@@ -19,8 +26,8 @@
     </div>
     <section>        
         <mat-list>            
-            @for (detalle of getGrupoDetalle()(); track detalle.id) {
-                <mat-list-item>
+            @for (detalle of grupoDetalle(); track detalle.id) {
+                <mat-list-item cdkDrag [cdkDragData]="detalle">
                     <strong>#{{detalle.id}} - {{detalle.nodoCodigo}}</strong>
                     <p>{{detalle.nodoDescripcion}}</p>
                 </mat-list-item>

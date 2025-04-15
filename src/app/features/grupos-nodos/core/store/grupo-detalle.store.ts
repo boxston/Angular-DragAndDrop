@@ -23,6 +23,8 @@ export class GrupoDetalleStore {
   }
 
   addGrupoDetalle(detalle: Detalle) {
+    const yaExiste = this.grupoDetalle().some(d => d.nodoDestino === detalle.nodoDestino);
+    if (yaExiste) return;
     this.grupoService.addGrupoDetalle(detalle).subscribe((nuevo) => {
       this.grupoDetalle.update((grupos) => [...grupos, nuevo]);
     });
@@ -33,6 +35,11 @@ export class GrupoDetalleStore {
       this.grupoDetalle.update((grupos) =>
         grupos.map((g) => (g.id === actualizado.id ? actualizado : g))
       );
+      this.forceUpdateGrupoDetalle();
     });
+  }
+
+  forceUpdateGrupoDetalle() {
+    this.grupoDetalle.update(val => [...val]);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Nodo } from '../interfaces';
+import { Detalle, Nodo } from '../interfaces';
 const mock: Nodo[] = [
   {
     Id: 101,
@@ -191,8 +191,23 @@ export class NodoService {
 
   constructor(private http: HttpClient) {}
 
-  getNodo(): Observable<Nodo[]> {
-    return of(mock);
-    return this.http.get<Nodo[]>(this.apiUrl);
+  getNodo(): Observable<Detalle[]> {
+    return of(mock).pipe(
+      map(nodos => nodos.map(nodo => this.transformarNodoADetalle(nodo)))
+    );
+    // return this.http.get<Nodo[]>(this.apiUrl).pipe(
+    //   map(nodos => nodos.map(nodo => this.transformarNodoADetalle(nodo)))
+    // );
+  }
+
+  private transformarNodoADetalle(nodo: Nodo): Detalle {
+    return {
+      id: nodo.Id,
+      nodoDestino: nodo.IdNodoItem,
+      activo: nodo.Activo,
+      nodoCodigo: parseInt(nodo.Codigo),
+      nodoDescripcion: nodo.Descripcion,
+      nodoTipo: nodo.IdNodoTipo
+    };
   }
 }
