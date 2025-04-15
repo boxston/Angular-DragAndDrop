@@ -45,8 +45,8 @@ const mock: Nodo[] = [
     Codigo: "105",
     Descripcion: "Nodo 105",
     IdNodoItem: 105,
-    IdNodoTipo: 3,
-    Tipo: "Tipo 3"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   },
   {
     Id: 106,
@@ -54,17 +54,8 @@ const mock: Nodo[] = [
     Codigo: "106",
     Descripcion: "Nodo 106",
     IdNodoItem: 106,
-    IdNodoTipo: 3,
-    Tipo: "Tipo 3"
-  },
-  {
-    Id: 7,
-    Activo: true,
-    Codigo: "7",
-    Descripcion: "Nodo 7",
-    IdNodoItem: 7,
-    IdNodoTipo: 4,
-    Tipo: "Tipo 4"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   },
   {
     Id: 8,
@@ -72,8 +63,8 @@ const mock: Nodo[] = [
     Codigo: "8",
     Descripcion: "Nodo 8",
     IdNodoItem: 8,
-    IdNodoTipo: 4,
-    Tipo: "Tipo 4"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 9,
@@ -81,8 +72,8 @@ const mock: Nodo[] = [
     Codigo: "9",
     Descripcion: "Nodo 9",
     IdNodoItem: 9,
-    IdNodoTipo: 5,
-    Tipo: "Tipo 5"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 10,
@@ -90,8 +81,8 @@ const mock: Nodo[] = [
     Codigo: "10",
     Descripcion: "Nodo 10",
     IdNodoItem: 10,
-    IdNodoTipo: 5,
-    Tipo: "Tipo 5"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 11,
@@ -99,8 +90,8 @@ const mock: Nodo[] = [
     Codigo: "11",
     Descripcion: "Nodo 11",
     IdNodoItem: 11,
-    IdNodoTipo: 1,
-    Tipo: "Tipo 1"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 12,
@@ -108,8 +99,8 @@ const mock: Nodo[] = [
     Codigo: "12",
     Descripcion: "Nodo 12",
     IdNodoItem: 12,
-    IdNodoTipo: 1,
-    Tipo: "Tipo 1"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 13,
@@ -117,8 +108,8 @@ const mock: Nodo[] = [
     Codigo: "13",
     Descripcion: "Nodo 13",
     IdNodoItem: 13,
-    IdNodoTipo: 2,
-    Tipo: "Tipo 2"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   },
   {
     Id: 14,
@@ -126,8 +117,8 @@ const mock: Nodo[] = [
     Codigo: "14",
     Descripcion: "Nodo 14",
     IdNodoItem: 14,
-    IdNodoTipo: 2,
-    Tipo: "Tipo 2"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   },
   {
     Id: 15,
@@ -135,8 +126,8 @@ const mock: Nodo[] = [
     Codigo: "15",
     Descripcion: "Nodo 15",
     IdNodoItem: 15,
-    IdNodoTipo: 3,
-    Tipo: "Tipo 3"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   },
   {
     Id: 16,
@@ -144,8 +135,8 @@ const mock: Nodo[] = [
     Codigo: "16",
     Descripcion: "Nodo 16",
     IdNodoItem: 16,
-    IdNodoTipo: 3,
-    Tipo: "Tipo 3"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 17,
@@ -153,8 +144,8 @@ const mock: Nodo[] = [
     Codigo: "17",
     Descripcion: "Nodo 17",
     IdNodoItem: 17,
-    IdNodoTipo: 4,
-    Tipo: "Tipo 4"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 18,
@@ -162,8 +153,8 @@ const mock: Nodo[] = [
     Codigo: "18",
     Descripcion: "Nodo 18",
     IdNodoItem: 18,
-    IdNodoTipo: 4,
-    Tipo: "Tipo 4"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 19,
@@ -171,8 +162,8 @@ const mock: Nodo[] = [
     Codigo: "19",
     Descripcion: "Nodo 19",
     IdNodoItem: 19,
-    IdNodoTipo: 5,
-    Tipo: "Tipo 5"
+    IdNodoTipo: 2,
+    Tipo: "Tipo 2"
   },
   {
     Id: 20,
@@ -180,8 +171,8 @@ const mock: Nodo[] = [
     Codigo: "20",
     Descripcion: "Nodo 20",
     IdNodoItem: 20,
-    IdNodoTipo: 5,
-    Tipo: "Tipo 5"
+    IdNodoTipo: 1,
+    Tipo: "Tipo 1"
   }
 ];
 

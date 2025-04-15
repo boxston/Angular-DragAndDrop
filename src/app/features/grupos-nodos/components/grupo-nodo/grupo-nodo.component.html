@@ -2,22 +2,27 @@
     class="grupo-nodo"
     cdkDropList
     [id]="'nodos-disponibles'"
-    [cdkDropListData]="getNodo()()"
+    [cdkDropListData]="nodosDisponibles()"
     [cdkDropListConnectedTo]="getListaCabeceras()"
+    [cdkDropListSortingDisabled]="true"
     (cdkDropListDropped)="drop($event)"
 >
     <h3>Nodos Disponibles</h3>
     <aside>        
         <mat-form-field appearance="outline">
           <mat-label>Buscar Nodo</mat-label>
-          <input matInput placeholder="Placeholder">
+          <input
+            matInput 
+            [value]="searchQuery()"
+            (input)="searchQuery.set($any($event.target).value)"
+          >
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </aside>
     <mat-list>
-        @for (nodo of getNodo()(); track nodo.id) {            
+        @for (nodo of nodosDisponibles(); track nodo.id) {            
             <mat-list-item cdkDrag [cdkDragData]="nodo">
-                <strong>#{{nodo.id}} - {{nodo.nodoCodigo}}</strong>
+                <strong>Nodo - {{nodo.nodoCodigo}}</strong>
                 <p>{{nodo.nodoDescripcion}}</p>
             </mat-list-item>
         }

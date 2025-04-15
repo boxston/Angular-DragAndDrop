@@ -10,6 +10,7 @@ import { MatList, MatListItem } from "@angular/material/list";
 import { GrupoCabeceraStore, GrupoDetalleStore } from "../../core/store";
 import { CdkDrag, CdkDragDrop, CdkDropList, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Detalle } from "../../core/interfaces";
+import { NodoStore } from "../../core/store/nodo.store";
 
 @Component({
     standalone: true,
@@ -40,22 +41,29 @@ export class GrupoCabeceraPage implements OnInit {
     @Input() dropListId: string = '';  // ID único del grupo
 
     @Input() id: number = 0;
-    @Input() grupoPaletizado: number = 0;   
-    @Input() nodoDestinatario: number = 0;
-    @Input() plazaRuteo: number = 0;
+    @Input() grupoPaletizado: number | null = null;   
+    @Input() nodoDestinatario: number | null = null;
+    @Input() plazaRuteo: number | null = null;
 
     grupoCabeceraStore = inject(GrupoCabeceraStore);
     grupoDetalleStore = inject(GrupoDetalleStore);
+    nodoStore = inject(NodoStore);
 
     constructor() {}
     
     ngOnInit(): void {
         this.grupoDetalleStore.loadGrupoDetalle();
+        console.log(this.nodoDestinatario);
+        
     }
 
     grupoDetalle = computed(() =>
         this.grupoDetalleStore.grupoDetalle().filter(g => g.grupoCabeceraId === this.id)
     );
+
+    listNodo = computed(() => {
+        return this.nodoStore.nodo();
+    });
 
     getListaCabeceras() {
         let cabeceras = this.grupoCabeceraStore.grupoCabecera();
@@ -67,21 +75,19 @@ export class GrupoCabeceraPage implements OnInit {
     drop(event: CdkDragDrop<any[]>) {
         const { container, previousContainer, item } = event;
         if (previousContainer.id === container.id) return;
-        console.log(previousContainer.id, container.id);
+        
         if (previousContainer.id === 'nodos-disponibles') {                     
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));            
-           console.log({
-            ...item.data,
-            grupoCabeceraId: grupoCabeceraDestinoId
-          });
-           
+            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));
             this.grupoDetalleStore.addGrupoDetalle({
               ...item.data,
               grupoCabeceraId: grupoCabeceraDestinoId
             });
+            return;
         }
 
-        if (container.id === 'nodos-sin-asignar') return;
+        if (container.id === 'nodos-disponibles'){
+            this.grupoDetalleStore.deleteGrupoDetalle(item.data.nodoDestino);
+        };
         
         const isCabecera = (id: string) => id.startsWith('cabecera-');
         if(isCabecera(previousContainer.id) && isCabecera(container.id)) {            

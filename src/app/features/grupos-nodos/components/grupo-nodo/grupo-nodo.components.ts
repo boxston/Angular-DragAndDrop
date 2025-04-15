@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, computed, EventEmitter, inject, Input, OnInit, Output, signal } from "@angular/core";
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -39,12 +39,30 @@ export class GrupoNodoPage implements OnInit {
     grupoCabeceraStore = inject(GrupoCabeceraStore);
     grupoDetalleStore = inject(GrupoDetalleStore);
     
+    searchQuery = signal('');
+
     constructor() {}
     
     ngOnInit(): void {
         this.nodoStore.loadNodo();
         this.grupoDetalleStore.loadGrupoDetalle();
     }
+
+
+    nodosDisponibles = computed(() => {
+        const query = this.searchQuery().toLowerCase().trim();
+        const nodos = this.nodoStore.nodo();
+        const nodosAsignados = this.grupoDetalleStore.grupoDetalle().map(g => g.nodoDestino);
+    
+        return nodos
+            .filter(n => !nodosAsignados.includes(n.nodoDestino))
+            .filter(n => {
+                return (
+                    n.nodoCodigo?.toString().toLowerCase().includes(query) ||
+                    n.nodoDescripcion?.toLowerCase().includes(query)
+                );
+            });
+    });
 
     getNodo() {
         return computed(() => {
@@ -73,7 +91,9 @@ export class GrupoNodoPage implements OnInit {
             return;
         }
 
-        if (container.id === 'nodos-disponibles') return;
+        if (container.id === 'nodos-disponibles'){
+            this.grupoDetalleStore.deleteGrupoDetalle(item.data.nodoDestino);
+        };
         
         const isCabecera = (id: string) => id.startsWith('cabecera-');
         if(isCabecera(previousContainer.id) && isCabecera(container.id)) {            

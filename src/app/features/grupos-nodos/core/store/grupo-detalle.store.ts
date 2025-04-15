@@ -23,11 +23,12 @@ export class GrupoDetalleStore {
   }
 
   addGrupoDetalle(detalle: Detalle) {
-    const yaExiste = this.grupoDetalle().some(d => d.nodoDestino === detalle.nodoDestino);
-    if (yaExiste) return;
     this.grupoService.addGrupoDetalle(detalle).subscribe((nuevo) => {
+      const yaExiste = this.grupoDetalle().some(d => d.nodoDestino === detalle.nodoDestino);
+      if (yaExiste) return;  
       this.grupoDetalle.update((grupos) => [...grupos, nuevo]);
     });
+    this.forceUpdateGrupoDetalle();
   }
 
   updateGrupoDetalle(detalle: Detalle) {
@@ -41,5 +42,12 @@ export class GrupoDetalleStore {
 
   forceUpdateGrupoDetalle() {
     this.grupoDetalle.update(val => [...val]);
+  }
+
+  deleteGrupoDetalle(nodoDestino: number) {
+    this.grupoService.deleteGrupoDetalle(nodoDestino).subscribe(() => {
+      this.grupoDetalle.update((grupos) => grupos.filter(g => g.nodoDestino !== nodoDestino));
+      this.forceUpdateGrupoDetalle();
+    });
   }
 }

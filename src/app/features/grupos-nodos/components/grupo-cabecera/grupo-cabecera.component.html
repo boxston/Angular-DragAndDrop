@@ -4,6 +4,7 @@
     [id]="'cabecera-'+id"
     [cdkDropListData]="grupoDetalle()"
     [cdkDropListConnectedTo]="getListaCabeceras()"
+    [cdkDropListSortingDisabled]="true"
     (cdkDropListDropped)="drop($event)"
 >
     <aside>
@@ -13,14 +14,30 @@
     <div>
         <mat-form-field  appearance="outline">
             <mat-label>Nodo destinatario</mat-label>
-            <mat-select >
-                <mat-option value="option">Option</mat-option>
+            <mat-select [value]="nodoDestinatario">                
+                @for (nodo of listNodo(); track nodo.id) {
+                    <mat-option [value]="nodo.nodoDestino">
+                        {{nodo.nodoDestino}} - 
+                        {{ nodo.nodoDescripcion && 
+                            nodo.nodoDescripcion.length > 11 ?
+                            nodo.nodoDescripcion.slice(0, 11) + '...' :
+                            nodo.nodoDescripcion }}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
         <mat-form-field  appearance="outline">
             <mat-label>Plaza Ruteo</mat-label>
-            <mat-select>
-                <mat-option value="option">Option</mat-option>
+            <mat-select [value]="plazaRuteo">
+                @for (nodo of listNodo(); track nodo.id) {
+                    <mat-option [value]="nodo.nodoDestino">
+                        {{nodo.nodoDestino}} - 
+                        {{ nodo.nodoDescripcion && 
+                            nodo.nodoDescripcion.length > 11 ?
+                            nodo.nodoDescripcion.slice(0, 11) + '...' :
+                            nodo.nodoDescripcion }}
+                    </mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>

@@ -3,7 +3,11 @@
     <aside class="aside-search">        
         <mat-form-field appearance="outline">
           <mat-label>Buscar grupo Paletizado</mat-label>
-          <input matInput placeholder="Placeholder">
+          <input 
+            matInput
+            [value]="searchQuery()"
+            (input)="searchQuery.set($any($event.target).value)"
+          >
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
         <button mat-mini-fab color="primary" class="add-button">
@@ -11,7 +15,7 @@
         </button>
     </aside>
     <section>
-        @for (paletizado of getGrupoPaletizado(); track paletizado.id) {
+        @for (paletizado of grupoPaletizado(); track paletizado.id) {
             <article>
                 <aside>
                     <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>

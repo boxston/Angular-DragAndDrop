@@ -83,10 +83,17 @@ export class GrupoDetalleService {
     // return this.http.put<Detalle>(`${this.apiUrl}/${detalle.id}`, detalle);
   }
 
-  addGrupoDetalle(detalle: Detalle): Observable<Detalle> {
+  addGrupoDetalle(detalle: Detalle): Observable<Detalle> {    
     const nuevoDetalle = { ...detalle, id: mock.length + 1 };
     mock.push(nuevoDetalle);
     return of(nuevoDetalle);
     return this.http.post<Detalle>(this.apiUrl, detalle);
+  }
+  
+  deleteGrupoDetalle(nodoDestino: number): Observable<void> {
+    const index = mock.findIndex(d => d.nodoDestino === nodoDestino);
+    if (index !== -1) mock.splice(index, 1);
+    return of(void 0);
+    // return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

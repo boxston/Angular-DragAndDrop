@@ -6,24 +6,24 @@ const mock : Cabecera[]=[
   {
     "id": 1,
     "grupoPaletizadoId": 1,
-    "nodoDestinatarioId": 1,
-    "nodoPlazaRuteoId": 2,
+    "nodoDestinatarioId": 101,
+    "nodoPlazaRuteoId": 102,
     "activo": true,
     "usuario": "Alan"
   },
   {
     "id": 2,
     "grupoPaletizadoId": 1,
-    "nodoDestinatarioId": 3,
-    "nodoPlazaRuteoId": 4,
+    "nodoDestinatarioId": 103,
+    "nodoPlazaRuteoId": 104,
     "activo": true,
     "usuario": "Alan"
   },
   {
     "id": 3,
     "grupoPaletizadoId": 2,
-    "nodoDestinatarioId": 5,
-    "nodoPlazaRuteoId": 6,
+    "nodoDestinatarioId": 105,
+    "nodoPlazaRuteoId": 106,
     "activo": true,
     "usuario": "Alan"
   }

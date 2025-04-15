@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, OnInit, Output } from "@angular/core";
+import { Component, computed, EventEmitter, inject, OnInit, Output, signal } from "@angular/core";
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -34,43 +34,25 @@ import { CdkDragDrop } from "@angular/cdk/drag-drop";
 export class GrupoPaletizadoPage implements OnInit {
     grupoPaletizadoStore = inject(GrupoPaletizadoStore);
     grupoCabeceraStore = inject(GrupoCabeceraStore);
-    searchQuery: string = ""; 
+        searchQuery = signal('');
     
     ngOnInit(): void {
         this.grupoPaletizadoStore.loadGrupoPaletizado();
         this.grupoCabeceraStore.loadGrupoCabecera();        
     }
 
-    getGrupoPaletizado(): any[] {
-        return this.grupoPaletizadoStore.grupoPaletizado().sort((a, b) => {
-            const aHighlighted = this.isGroupHighlighted(a.nombre);
-            const bHighlighted = this.isGroupHighlighted(b.id);
-            return (aHighlighted === bHighlighted) ? 0 : aHighlighted ? -1 : 1;
+    grupoPaletizado = computed(() => {
+        const query = this.searchQuery().toLowerCase().trim();
+        return this.grupoPaletizadoStore.grupoPaletizado().filter(g => {
+            const nombreMatch = g.nombre?.toLowerCase().includes(query);
+            const idMatch = g.id?.toString().includes(query);
+            return nombreMatch || idMatch;
         });
-    }
+    });
 
     getGrupoCabecera(paletizadoId: number) {
         return computed(() =>
           this.grupoCabeceraStore.grupoCabecera().filter(g => g.grupoPaletizadoId === paletizadoId)
         );
-    }
-
-    // Función para verificar si un grupo debe ser resaltado
-    isGroupHighlighted(grupo: any): boolean {
-        if(grupo == undefined || grupo == null) return false;
-        if(this.searchQuery != '' && grupo.length > 1){
-            const nodesInGroup = grupo;
-            return grupo.some((node: any) => 
-                node.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-                node.address.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                node.id.toString().includes(this.searchQuery)
-            );
-        }
-        return false;
-    }
-
-    // Función para obtener el trackBy
-    trackById(index: number, item: any): any {
-        return item.id;
     }
 }
