@@ -87,7 +87,7 @@ export class GrupoDetalleService {
     const nuevoDetalle = { ...detalle, id: mock.length + 1 };
     mock.push(nuevoDetalle);
     return of(nuevoDetalle);
-    return this.http.post<Detalle>(this.apiUrl, detalle);
+    //return this.http.post<Detalle>(this.apiUrl, detalle);
   }
   
   deleteGrupoDetalle(nodoDestino: number): Observable<void> {

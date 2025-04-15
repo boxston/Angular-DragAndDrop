@@ -8,9 +8,10 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatList, MatListItem } from "@angular/material/list";
 import { GrupoCabeceraStore, GrupoDetalleStore } from "../../core/store";
-import { CdkDrag, CdkDragDrop, CdkDropList, transferArrayItem } from "@angular/cdk/drag-drop";
-import { Detalle } from "../../core/interfaces";
+import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import { NodoStore } from "../../core/store/nodo.store";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
 
 @Component({
     standalone: true,
@@ -49,6 +50,7 @@ export class GrupoCabeceraPage implements OnInit {
     grupoCabeceraStore = inject(GrupoCabeceraStore);
     grupoDetalleStore = inject(GrupoDetalleStore);
     nodoStore = inject(NodoStore);
+    dialog = inject(MatDialog);
 
     constructor() {}
     
@@ -69,5 +71,18 @@ export class GrupoCabeceraPage implements OnInit {
         return ["nodos-disponibles"].concat(
             cabeceras.map(c => 'cabecera-' + c.id)
         );
+    }
+
+    deleteCabecera() {
+        this.dialog.open(ConfirmDialogComponent, {
+            data: {
+            title: '¿Eliminar grupo cabecera?',
+            message: `¿Estás seguro que querés eliminar la cabecera #${this.id}?`
+            }
+        }).afterClosed().subscribe(result => {
+            if (result) {
+            this.grupoCabeceraStore.deleteGrupoCabecera(this.id);
+            }
+        });
     }
 }

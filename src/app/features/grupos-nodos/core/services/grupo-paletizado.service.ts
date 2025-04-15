@@ -24,18 +24,18 @@ export class GrupoPaletizadoService {
 
   getGrupoPaletizado(): Observable<Paletizado[]> {
     return of(mock);
-    return this.http.get<Paletizado[]>(this.apiUrl);
+    //return this.http.get<Paletizado[]>(this.apiUrl);
   }
 
   updateGrupoPaletizado(paletizado: Paletizado): Observable<Paletizado> {
     return of({ ...paletizado }); 
-    return this.http.put<Paletizado>(`${this.apiUrl}/${paletizado.id}`, paletizado);
+    //return this.http.put<Paletizado>(`${this.apiUrl}/${paletizado.id}`, paletizado);
   }
 
   addGrupoPaletizado(paletizado: Paletizado): Observable<Paletizado> {
-    const nuevoPaletizado = { ...paletizado, id: mock.length + 1 };
+    const nuevoPaletizado = { ...paletizado, id: Math.max(...mock.map(p => p.id)) + 1 };
     mock.push(nuevoPaletizado);
     return of(nuevoPaletizado);
-    return this.http.post<Paletizado>(this.apiUrl, paletizado);
+    //return this.http.post<Paletizado>(this.apiUrl, paletizado);
   }
 }

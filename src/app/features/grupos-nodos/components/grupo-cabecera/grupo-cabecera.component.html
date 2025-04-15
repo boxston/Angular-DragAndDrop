@@ -8,7 +8,7 @@
     (cdkDropListDropped)="dropHandler($event)" 
 >
     <aside>
-        <mat-icon>cancel</mat-icon>
+        <mat-icon (click)="deleteCabecera()">cancel</mat-icon>
     </aside>    
     <h3>#{{id}} - Grupo Nodo</h3>
     <div>

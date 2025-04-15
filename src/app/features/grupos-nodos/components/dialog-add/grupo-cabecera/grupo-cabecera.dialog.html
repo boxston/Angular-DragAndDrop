@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Crear Grupo Cabecera</h2>
+<mat-dialog-content>
+  <mat-form-field  appearance="outline">
+    <mat-label>Nodo destinatario</mat-label>
+    <mat-select [(ngModel)]="nodoDestinatarioId">                
+        @for (nodo of data.nodos; track nodo.id) {
+            <mat-option [value]="nodo.nodoDestino">
+                {{nodo.nodoDestino}} - 
+                {{ nodo.nodoDescripcion && 
+                    nodo.nodoDescripcion.length > 11 ?
+                    nodo.nodoDescripcion.slice(0, 11) + '...' :
+                    nodo.nodoDescripcion }}
+            </mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline">
+    <mat-label>Plaza Ruteo</mat-label>
+    <mat-select [(ngModel)]="nodoPlazaRuteoId">
+        @for (nodo of data.nodos; track nodo.id) {
+            <mat-option [value]="nodo.nodoDestino">
+                {{nodo.nodoDestino}} - 
+                {{ nodo.nodoDescripcion && 
+                    nodo.nodoDescripcion.length > 11 ?
+                    nodo.nodoDescripcion.slice(0, 11) + '...' :
+                    nodo.nodoDescripcion }}
+            </mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">cancelar</button>
+  <button mat-flat-button (click)="onSaveClick()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>

@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Crear Grupo Paletizado</h2>
+<mat-dialog-content>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre del Paletizado</mat-label>
+    <input matInput placeholder="Placeholder" [(ngModel)]="nombre" required>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">cancelar</button>
+  <button mat-flat-button (click)="onSaveClick()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>

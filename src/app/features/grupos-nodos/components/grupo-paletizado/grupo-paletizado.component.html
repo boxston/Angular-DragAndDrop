@@ -10,7 +10,7 @@
           >
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button mat-mini-fab color="primary" class="add-button">
+        <button mat-mini-fab color="primary" class="add-button" (click)="openDialogGrupoPaletizado()">
             <mat-icon>add</mat-icon>
         </button>
     </aside>
@@ -19,7 +19,7 @@
             <article>
                 <aside>
                     <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>
-                    <button mat-mini-fab color="primary">
+                    <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id)">
                         <mat-icon>add</mat-icon>
                     </button>
                 </aside>

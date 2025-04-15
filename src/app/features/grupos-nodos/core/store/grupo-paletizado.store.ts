@@ -24,8 +24,11 @@ export class GrupoPaletizadoStore {
 
   addGrupoPaletizado(paletizado: Paletizado) {
     this.grupoService.addGrupoPaletizado(paletizado).subscribe((nuevo) => {
+      const yaExiste = this.grupoPaletizado().some(d => d.id === nuevo.id);
+      if (yaExiste) return;
       this.grupoPaletizado.update((grupos) => [...grupos, nuevo]);
     });
+    this.forceUpdateGrupoPaletizado();
   }
 
   updateGrupoPaletizado(paletizado: Paletizado) {
@@ -35,4 +38,9 @@ export class GrupoPaletizadoStore {
       );
     });
   }
+
+  forceUpdateGrupoPaletizado() {
+    this.grupoPaletizado.update(val => [...val]);
+  }
+
 }

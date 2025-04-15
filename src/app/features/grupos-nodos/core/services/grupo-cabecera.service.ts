@@ -50,4 +50,9 @@ export class GrupoCabeceraService {
     return of(nuevoCabecera);
     return this.http.post<Cabecera>(this.apiUrl, cabecera);
   }
+  
+  deleteGrupoCabecera(cabeceraId: number): Observable<void> {
+    return of(void 0); // Mock
+    return this.http.delete<void>(`${this.apiUrl}/${cabeceraId}`);
+  }
 }
