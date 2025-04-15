@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { GrupoCabeceraStore, GrupoDetalleStore, GrupoPaletizadoStore } from "../../core/store";
 import { GrupoPaletizadoPage } from "../../components/grupo-paletizado/grupo-paletizado.components";
+import { GrupoNodoPage } from "../../components/grupo-nodo/grupo-nodo.components";
 
 @Component({
     standalone: true,
@@ -15,7 +16,8 @@ import { GrupoPaletizadoPage } from "../../components/grupo-paletizado/grupo-pal
     MatIconModule,
     MatButtonModule,
     FormsModule,
-    GrupoPaletizadoPage
+    GrupoPaletizadoPage,
+    GrupoNodoPage
 ],
     templateUrl: './grupo-nodos.component.html',
     styleUrls: ['./grupo-nodos.component.scss'],

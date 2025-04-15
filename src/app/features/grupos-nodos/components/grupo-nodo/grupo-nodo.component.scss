@@ -1,0 +1,53 @@
+.grupo-nodo{
+    :host {
+        display: block;
+        width: 100%;
+    }
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+h3{
+    width: 100%;
+    text-align: left;
+}
+aside{
+    width: 100%;
+    mat-form-field{
+        width: 100%;
+        input{
+            width: 100%;
+        }
+    }
+}
+mat-list{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0px;
+    margin: 0;
+    list-style: none;
+    overflow-y: auto;
+    max-height: 500px;
+    :hover{
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+    mat-list-item{
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 0px 20px;
+        strong{
+            font-size: 16px;
+            line-height: 32px;
+            margin: 0px !important;
+        }
+        p{
+            margin: 0px !important;
+            padding: 0px 10px;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+    }
+}

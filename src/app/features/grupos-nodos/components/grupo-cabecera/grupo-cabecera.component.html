@@ -1,0 +1,30 @@
+<article class="grupo-cabecera">
+    <aside>
+        <mat-icon>cancel</mat-icon>
+    </aside>    
+    <h3>#{{id}} - Grupo Nodo</h3>
+    <div>
+        <mat-form-field  appearance="outline">
+            <mat-label>Nodo destinatario</mat-label>
+            <mat-select >
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field  appearance="outline">
+            <mat-label>Plaza Ruteo</mat-label>
+            <mat-select>
+                <mat-option value="option">Option</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <section>        
+        <mat-list>            
+            @for (detalle of getGrupoDetalle()(); track detalle.id) {
+                <mat-list-item>
+                    <strong>#{{detalle.id}} - {{detalle.nodoCodigo}}</strong>
+                    <p>{{detalle.nodoDescripcion}}</p>
+                </mat-list-item>
+            }
+        </mat-list>
+    </section>
+</article>

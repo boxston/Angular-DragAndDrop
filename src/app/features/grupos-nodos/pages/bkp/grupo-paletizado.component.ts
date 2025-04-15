@@ -1,15 +1,8 @@
-import { Component, inject } from "@angular/core";
-import { GruposNodosStore } from "../../core/store/grupos-nodos.store";
-import { GrupoComponent } from "../../components/grupo/grupo.component";
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import {MatIconModule} from '@angular/material/icon';
-import { MatButtonModule } from "@angular/material/button";
-import { FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+
 
 @Component({
     standalone: true,
-    selector: 'grupos-nodos-main',
+    selector: 'grupos-asd-main',
     imports: [
         CommonModule,
         GrupoComponent,

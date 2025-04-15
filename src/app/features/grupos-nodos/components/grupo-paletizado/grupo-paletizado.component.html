@@ -1,36 +1,34 @@
-<section>
-    <h2>Grupos Paletizado</h2>
-    <aside>SEARCH</aside>
-    <article>
-        <section>
-            <h3>Cabecera-1</h3>
-            <div>Opciones</div>
+<article class="grupo-paletizado">
+    <h3>Grupos Paletizado</h3>
+    <aside class="aside-search">        
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar grupo Paletizado</mat-label>
+          <input matInput placeholder="Placeholder">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-mini-fab color="primary" class="add-button">
+            <mat-icon>add</mat-icon>
+        </button>
+    </aside>
+    <section>
+        @for (paletizado of getGrupoPaletizado(); track paletizado.id) {
             <article>
-                <h4>Nodos</h4>
-                <ul>
-                    <li>Nodo-A</li>
-                </ul>
+                <aside>
+                    <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>
+                    <button mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </aside>
+                <section>
+                    @for (cabecera of getGrupoCabecera(paletizado.id)(); track cabecera.id) {
+                        <grupo-cabecera
+                            [id]="cabecera.id"
+                            [grupoPaletizado]="paletizado.id"
+                            [nodoDestinatario]="cabecera.nodoDestinatarioId"
+                            [plazaRuteo]="cabecera.nodoPlazaRuteoId" />
+                    }
+                </section>
             </article>
-        </section>
-        <section>
-            <h3>Cabecera-2</h3>
-            <div>Opciones</div>
-            <article>
-                <h4>Nodos</h4>
-                <ul>
-                    <li>Nodo-B</li>
-                </ul>
-            </article>
-        </section>
-        <section>
-            <h3>Cabecera-N</h3>
-            <div>Opciones</div>
-            <article>
-                <h4>Nodos</h4>
-                <ul>
-                    <li>Nodo-C</li>
-                </ul>
-            </article>
-        </section>
-    </article>
-</section>
+        }
+    </section>
+</article>

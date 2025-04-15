@@ -21,7 +21,7 @@ const mock : Cabecera[]=[
   },
   {
     "id": 3,
-    "grupoPaletizadoId": 1,
+    "grupoPaletizadoId": 2,
     "nodoDestinatarioId": 5,
     "nodoPlazaRuteoId": 6,
     "activo": true,

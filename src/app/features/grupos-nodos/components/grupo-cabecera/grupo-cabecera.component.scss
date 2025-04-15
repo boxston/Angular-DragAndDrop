@@ -1,0 +1,75 @@
+.grupo-cabecera{
+    position: relative;
+    width: auto;
+    background-color: #fff;
+    :host {
+        display: block;
+        width: 100%;
+    }
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    aside{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        mat-icon{
+            color: red;
+            cursor: pointer;
+        }
+    }
+    div{
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        mat-form-field{
+            height: 50px;
+            width: 100%;
+            max-width: 200px;
+            input{
+                width: 100%;
+            }
+        }
+    }
+    
+    section{
+        mat-list{
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid grey;
+            border-radius: 4px;
+            padding: 10px 0px;
+            margin: 0;
+            list-style: none;
+            overflow-y: auto;
+            max-height: 300px;
+            :hover{
+                background-color: #f0f0f0;
+                cursor: pointer;
+            }
+            min-height: 140px;
+            mat-list-item{
+                width: 100%;
+                height: auto;
+                box-sizing: border-box;
+                padding: 0px 20px;
+                strong{
+                    font-size: 16px;
+                    line-height: 32px;
+                    margin: 0px !important;
+                }
+                p{
+                    margin: 0px !important;
+                    padding: 0px 10px;
+                    box-sizing: border-box;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+

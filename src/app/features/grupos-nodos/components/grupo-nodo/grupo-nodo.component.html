@@ -1,0 +1,18 @@
+<article class="grupo-nodo">
+    <h3>Nodos Disponibles</h3>
+    <aside>        
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar Nodo</mat-label>
+          <input matInput placeholder="Placeholder">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </aside>
+    <mat-list>
+        @for (nodo of getNodo()(); track nodo.Id) {            
+            <mat-list-item>
+                <strong>#{{nodo.Id}} - {{nodo.Codigo}}</strong>
+                <p>{{nodo.Descripcion}}</p>
+            </mat-list-item>
+        }
+    </mat-list>
+</article>
