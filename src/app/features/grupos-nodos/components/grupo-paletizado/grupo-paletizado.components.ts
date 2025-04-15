@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, OnInit, Output, signal } from "@angular/core";
+import { Component, computed, EventEmitter, inject, Input, OnInit, Output, signal } from "@angular/core";
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -32,6 +32,7 @@ import { CdkDragDrop } from "@angular/cdk/drag-drop";
     providers: []
 })
 export class GrupoPaletizadoPage implements OnInit {
+    @Input() dropHandler!: (event: CdkDragDrop<any[]>) => void;
     grupoPaletizadoStore = inject(GrupoPaletizadoStore);
     grupoCabeceraStore = inject(GrupoCabeceraStore);
         searchQuery = signal('');

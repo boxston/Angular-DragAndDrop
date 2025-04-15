@@ -1,7 +1,7 @@
 <main>
     <h2>Grupos Nodos</h2>
     <section class="section-main" cdkDropListGroup>
-        <grupo-nodo></grupo-nodo>
-        <grupo-paletizado></grupo-paletizado>
+        <grupo-nodo [dropHandler]="drop.bind(this)" ></grupo-nodo>
+        <grupo-paletizado [dropHandler]="drop.bind(this)" ></grupo-paletizado>
     </section>
 </main>

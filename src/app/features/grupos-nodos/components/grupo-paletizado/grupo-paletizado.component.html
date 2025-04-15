@@ -26,6 +26,7 @@
                 <section>
                     @for (cabecera of getGrupoCabecera(paletizado.id)(); track cabecera.id) {
                         <grupo-cabecera
+                            [dropHandler]="dropHandler"
                             [id]="cabecera.id"
                             [grupoPaletizado]="paletizado.id"
                             [nodoDestinatario]="cabecera.nodoDestinatarioId"

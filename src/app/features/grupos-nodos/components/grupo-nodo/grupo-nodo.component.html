@@ -5,7 +5,7 @@
     [cdkDropListData]="nodosDisponibles()"
     [cdkDropListConnectedTo]="getListaCabeceras()"
     [cdkDropListSortingDisabled]="true"
-    (cdkDropListDropped)="drop($event)"
+    (cdkDropListDropped)="dropHandler($event)" 
 >
     <h3>Nodos Disponibles</h3>
     <aside>        

@@ -31,6 +31,7 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
     providers: []
 })
 export class GrupoNodoPage implements OnInit {
+    @Input() dropHandler!: (event: CdkDragDrop<any[]>) => void;
     @Input() dropListGroup: string[] = [];  // Lista de grupos conectados
     @Input() dropListId: string = '';  // ID único del grupo
     @Output() onDrop = new EventEmitter<CdkDragDrop<any>>(); // Emite cambio
@@ -77,32 +78,5 @@ export class GrupoNodoPage implements OnInit {
         return ["nodos-disponibles"].concat(
             cabeceras.map(c => 'cabecera-' + c.id)
         );
-    }
-    drop(event: CdkDragDrop<any[]>) {
-        const { container, previousContainer, item } = event;
-        if (previousContainer.id === container.id) return;
-        
-        if (previousContainer.id === 'nodos-disponibles') {                     
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));            
-            this.grupoDetalleStore.addGrupoDetalle({
-              ...item.data,
-              grupoCabeceraId: grupoCabeceraDestinoId
-            });
-            return;
-        }
-
-        if (container.id === 'nodos-disponibles'){
-            this.grupoDetalleStore.deleteGrupoDetalle(item.data.nodoDestino);
-        };
-        
-        const isCabecera = (id: string) => id.startsWith('cabecera-');
-        if(isCabecera(previousContainer.id) && isCabecera(container.id)) {            
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));            
-            this.grupoDetalleStore.updateGrupoDetalle({
-              ...item.data,
-              grupoCabeceraId: grupoCabeceraDestinoId
-            });
-            return;
-        }
     }
 }

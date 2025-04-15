@@ -39,7 +39,8 @@ import { NodoStore } from "../../core/store/nodo.store";
 export class GrupoCabeceraPage implements OnInit {
     @Input() dropListGroup: string[] = [];  // Lista de grupos conectados
     @Input() dropListId: string = '';  // ID único del grupo
-
+    @Input() dropHandler!: (event: CdkDragDrop<any[]>) => void;
+    
     @Input() id: number = 0;
     @Input() grupoPaletizado: number | null = null;   
     @Input() nodoDestinatario: number | null = null;
@@ -53,8 +54,6 @@ export class GrupoCabeceraPage implements OnInit {
     
     ngOnInit(): void {
         this.grupoDetalleStore.loadGrupoDetalle();
-        console.log(this.nodoDestinatario);
-        
     }
 
     grupoDetalle = computed(() =>
@@ -70,32 +69,5 @@ export class GrupoCabeceraPage implements OnInit {
         return ["nodos-disponibles"].concat(
             cabeceras.map(c => 'cabecera-' + c.id)
         );
-    }
-
-    drop(event: CdkDragDrop<any[]>) {
-        const { container, previousContainer, item } = event;
-        if (previousContainer.id === container.id) return;
-        
-        if (previousContainer.id === 'nodos-disponibles') {                     
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));
-            this.grupoDetalleStore.addGrupoDetalle({
-              ...item.data,
-              grupoCabeceraId: grupoCabeceraDestinoId
-            });
-            return;
-        }
-
-        if (container.id === 'nodos-disponibles'){
-            this.grupoDetalleStore.deleteGrupoDetalle(item.data.nodoDestino);
-        };
-        
-        const isCabecera = (id: string) => id.startsWith('cabecera-');
-        if(isCabecera(previousContainer.id) && isCabecera(container.id)) {            
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));            
-            this.grupoDetalleStore.updateGrupoDetalle({
-              ...item.data,
-              grupoCabeceraId: grupoCabeceraDestinoId
-            });
-        }
     }
 }

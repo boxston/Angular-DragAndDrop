@@ -5,7 +5,7 @@
     [cdkDropListData]="grupoDetalle()"
     [cdkDropListConnectedTo]="getListaCabeceras()"
     [cdkDropListSortingDisabled]="true"
-    (cdkDropListDropped)="drop($event)"
+    (cdkDropListDropped)="dropHandler($event)" 
 >
     <aside>
         <mat-icon>cancel</mat-icon>

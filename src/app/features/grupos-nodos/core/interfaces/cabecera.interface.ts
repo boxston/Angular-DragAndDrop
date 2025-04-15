@@ -4,5 +4,5 @@ export interface Cabecera {
     nodoDestinatarioId: number;
     nodoPlazaRuteoId: number;
     activo: boolean;
-    usuario: string;
+    usuario?: string;
 }
