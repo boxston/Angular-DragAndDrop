@@ -39,6 +39,7 @@ export class GrupoCabeceraStore {
         grupos.map((g) => (g.id === actualizado.id ? actualizado : g))
       );
     });
+    this.forceUpdateGrupoCabecera();
   }  
 
   deleteGrupoCabecera(cabeceraId: number) {

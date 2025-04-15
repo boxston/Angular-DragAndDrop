@@ -5,7 +5,9 @@
     [cdkDropListData]="grupoDetalle()"
     [cdkDropListConnectedTo]="getListaCabeceras()"
     [cdkDropListSortingDisabled]="true"
-    (cdkDropListDropped)="dropHandler($event)" 
+    (cdkDropListDropped)="dropHandler($event)"
+    cdkDrag
+    [cdkDragData]="{ id, tipo: 'cabecera', grupoPaletizado }"
 >
     <aside>
         <mat-icon (click)="deleteCabecera()">cancel</mat-icon>

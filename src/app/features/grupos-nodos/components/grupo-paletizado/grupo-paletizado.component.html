@@ -23,7 +23,14 @@
                         <mat-icon>add</mat-icon>
                     </button>
                 </aside>
-                <section>
+                <section
+                    cdkDropList
+                    [id]="'paletizado-'+paletizado.id"
+                    [cdkDropListData]="getGrupoCabecera(paletizado.id)()"
+                    [cdkDropListConnectedTo]="getListaPaletizados()"
+                    [id]="'paletizado-'+paletizado.id"
+                    (cdkDropListDropped)="drop($event)"
+                >
                     @for (cabecera of getGrupoCabecera(paletizado.id)(); track cabecera.id) {
                         <grupo-cabecera
                             [dropHandler]="dropHandler"

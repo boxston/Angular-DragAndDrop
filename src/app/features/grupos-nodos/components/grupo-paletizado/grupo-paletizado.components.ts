@@ -18,7 +18,7 @@ import {
   GrupoCabeceraStore,
   GrupoPaletizadoStore
 } from "../../core/store";
-import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import {
   MatDialog,
   MatDialogModule,
@@ -26,24 +26,21 @@ import {
 import { AddGrupoPaletizadoDialog } from "../dialog-add/grupo-paletizado/grupo-paletizado.dialog";
 import { AddGrupoCabeceraDialog } from "../dialog-add/grupo-cabecera/grupo-cabecera.dialog";
 import { NodoStore } from "../../core/store/nodo.store";
+import { Cabecera } from "../../core/interfaces";
 
 @Component({
     standalone: true,
     selector: 'grupo-paletizado',
     imports: [
-    CommonModule,
-    GrupoCabeceraPage,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule,
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDialogModule, 
+        CommonModule,
+        CdkDropList,
+        GrupoCabeceraPage,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule
 ],
     templateUrl: './grupo-paletizado.component.html',
     styleUrls: ['./grupo-paletizado.component.scss'],
@@ -71,6 +68,9 @@ export class GrupoPaletizadoPage implements OnInit {
         });
     });
 
+    getListaPaletizados(): string[] {
+        return this.grupoPaletizado().map(p => 'paletizado-' + p.id);
+    }
 
     listNodo = computed(() => {
         return this.nodoStore.nodo();
@@ -107,5 +107,25 @@ export class GrupoPaletizadoPage implements OnInit {
               this.grupoCabeceraStore.addGrupoCabecera(result);
           }
       });
-  }  
+    }  
+
+
+    drop(event: CdkDragDrop<any>) {
+        const { container, previousContainer, item } = event;   
+        if (item.data.tipo === 'cabecera') {            
+            if (container.id !== previousContainer.id) {
+                const grupoPaletizadoId = parseInt(container.id.replace('paletizado-', ''));
+                const update: Cabecera = {
+                    ...item.data,
+                    grupoPaletizadoId: grupoPaletizadoId,
+                }
+                this.grupoCabeceraStore.updateGrupoCabecera(update);
+          }
+        }
+      }
+      
+      extractPaletizadoId(id: string): number {
+        return +id.replace('paletizado-', '');
+    }
+
 }
