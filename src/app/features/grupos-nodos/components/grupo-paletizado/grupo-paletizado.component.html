@@ -19,23 +19,23 @@
             <article>
                 <aside>
                     <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>
-                    <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id)">
+                    <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id!)">
                         <mat-icon>add</mat-icon>
                     </button>
                 </aside>
                 <section
                     cdkDropList
                     [id]="'paletizado-'+paletizado.id"
-                    [cdkDropListData]="getGrupoCabecera(paletizado.id)()"
+                    [cdkDropListData]="getGrupoCabecera(paletizado.id!)()"
                     [cdkDropListConnectedTo]="getListaPaletizados()"
                     [id]="'paletizado-'+paletizado.id"
                     (cdkDropListDropped)="drop($event)"
                 >
-                    @for (cabecera of getGrupoCabecera(paletizado.id)(); track cabecera.id) {
+                    @for (cabecera of getGrupoCabecera(paletizado.id!)(); track cabecera.id) {
                         <grupo-cabecera
                             [dropHandler]="dropHandler"
                             [id]="cabecera.id"
-                            [grupoPaletizado]="paletizado.id"
+                            [grupoPaletizado]="paletizado.id!"
                             [nodoDestinatario]="cabecera.nodoDestinatarioId"
                             [plazaRuteo]="cabecera.nodoPlazaRuteoId" />
                     }

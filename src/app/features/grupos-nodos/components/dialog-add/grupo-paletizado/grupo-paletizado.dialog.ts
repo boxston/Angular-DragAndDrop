@@ -34,14 +34,13 @@ import { Paletizado } from "../../../core/interfaces";
   })
   export class AddGrupoPaletizadoDialog {
     readonly dialogRef = inject(MatDialogRef<AddGrupoPaletizadoDialog>);
-    nombre : string = "";
+    Nombre : string = "";
 
     onSaveClick(): void {
         const nuevoPaletizado: Paletizado = {
-            id: 0,
-            nombre: this.nombre,
+            nombre: this.Nombre,
             activo: true
-        };
+        };        
         this.dialogRef.close(nuevoPaletizado);
     }
 

@@ -1,9 +1,9 @@
 export interface Nodo {
-    Id: number;
-    IdNodoItem: number;
-    IdNodoTipo: number;
-    Tipo: string;
-    Codigo: string;
-    Descripcion: string;
-    Activo: boolean;
+    id: number;
+    idNodoItem: number;
+    idNodoTipo: number;
+    tipo: string;
+    codigo: string;
+    descripcion: string;
+    activo: boolean;
 }

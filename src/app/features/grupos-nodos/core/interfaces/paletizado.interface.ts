@@ -1,5 +1,5 @@
 export interface Paletizado {
-    id: number;
+    id?: number;
     nombre: string;
     activo: boolean;
     usuario?: string;

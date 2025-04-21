@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { GrupoDetalleService } from '../services/grupo-detalle.service';
 import { Detalle } from '../interfaces';
+import { ResponseDTO } from '../interfaces/responseDTO.interface';
 
 @Injectable({ providedIn: 'root' })
 export class GrupoDetalleStore {
@@ -11,33 +12,45 @@ export class GrupoDetalleStore {
 
   loadGrupoDetalle() {
     this.loading.set(true);
-    this.grupoService.getGrupoDetalle().subscribe({
-      next: (grupos) => {
-        this.grupoDetalle.set(grupos);
+    this.grupoService.getGrupoDetalle()
+      .subscribe((response: ResponseDTO<Detalle[]>) =>{        
+        if (response.hasError || !Array.isArray(response.data)) {
+          this.grupoDetalle.set([]);
+          this.loading.set(false);
+          return;
+        }
+        this.grupoDetalle.set(response.data);        
         this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+      });
   }
 
   addGrupoDetalle(detalle: Detalle) {
-    this.grupoService.addGrupoDetalle(detalle).subscribe((nuevo) => {
-      const yaExiste = this.grupoDetalle().some(d => d.nodoDestino === detalle.nodoDestino);
-      if (yaExiste) return;  
-      this.grupoDetalle.update((grupos) => [...grupos, nuevo]);
-    });
+    this.loading.set(true);
+    this.grupoService.addGrupoDetalle(detalle)
+      .subscribe((response: ResponseDTO<Detalle>) => {
+        if (response.hasError) {
+          this.loading.set(false);
+          return;
+        }
+        this.grupoDetalle.update((grupos) => [...grupos, response.data]);
+        this.loading.set(false);
+      });
     this.forceUpdateGrupoDetalle();
   }
 
   updateGrupoDetalle(detalle: Detalle) {
-    this.grupoService.updateGrupoDetalle(detalle).subscribe((actualizado) => {
-      this.grupoDetalle.update((grupos) =>
-        grupos.map((g) => (g.id === actualizado.id ? actualizado : g))
-      );
-      this.forceUpdateGrupoDetalle();
-    });
+    this.loading.set(true);
+    this.grupoService.updateGrupoDetalle(detalle)
+      .subscribe((response: ResponseDTO<Detalle>) => {
+        if (response.hasError) {
+          this.loading.set(false);
+          return;
+        }
+        this.grupoDetalle.update((grupos) =>
+          grupos.map((g) => (g.id === response.data.id ? response.data : g))
+        );
+        this.forceUpdateGrupoDetalle();
+      });
   }
 
   forceUpdateGrupoDetalle() {
@@ -45,6 +58,7 @@ export class GrupoDetalleStore {
   }
 
   deleteGrupoDetalle(nodoDestino: number) {
+    this.loading.set(true);
     this.grupoService.deleteGrupoDetalle(nodoDestino).subscribe(() => {
       this.grupoDetalle.update((grupos) => grupos.filter(g => g.nodoDestino !== nodoDestino));
       this.forceUpdateGrupoDetalle();

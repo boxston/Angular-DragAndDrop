@@ -53,6 +53,7 @@ export class GrupoNodoPage implements OnInit {
     nodosDisponibles = computed(() => {
         const query = this.searchQuery().toLowerCase().trim();
         const nodos = this.nodoStore.nodo();
+        if(!nodos) return [];
         const nodosAsignados = this.grupoDetalleStore.grupoDetalle().map(g => g.nodoDestino);
     
         return nodos
@@ -75,6 +76,7 @@ export class GrupoNodoPage implements OnInit {
 
     getListaCabeceras() {
         let cabeceras = this.grupoCabeceraStore.grupoCabecera();
+        if (!Array.isArray(cabeceras)) return ["nodos-disponibles"];
         return ["nodos-disponibles"].concat(
             cabeceras.map(c => 'cabecera-' + c.id)
         );

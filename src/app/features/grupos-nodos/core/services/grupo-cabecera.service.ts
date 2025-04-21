@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Cabecera } from '../interfaces/cabecera.interface';
+import { ResponseDTO } from '../interfaces/responseDTO.interface';
+/*
 const mock : Cabecera[]=[
   {
     "id": 1,
@@ -28,31 +30,32 @@ const mock : Cabecera[]=[
     "usuario": "Alan"
   }
 ]
+*/
 @Injectable({ providedIn: 'root' })
 export class GrupoCabeceraService {
-  private apiUrl = 'https://localhost:7003/api/v1/gruponodos';
+  private apiUrl = 'https://localhost:7003/api/v1/gruponodos/cabecera';
 
   constructor(private http: HttpClient) {}
 
-  getGrupoCabecera(): Observable<Cabecera[]> {
-    return of(mock);
-    return this.http.get<Cabecera[]>(this.apiUrl);
+  getGrupoCabecera(): Observable<ResponseDTO<Cabecera[]>> {
+    //return of(mock);
+    return this.http.get<ResponseDTO<Cabecera[]>>(this.apiUrl);
   }
 
-  updateGrupoCabecera(cabecera: Cabecera): Observable<Cabecera> {
-    return of({ ...cabecera }); 
-    return this.http.put<Cabecera>(`${this.apiUrl}/${cabecera.id}`, cabecera);
+  updateGrupoCabecera(cabecera: Cabecera): Observable<ResponseDTO<Cabecera>> {
+    //return of({ ...cabecera }); 
+    return this.http.put<ResponseDTO<Cabecera>>(`${this.apiUrl}/${cabecera.id}`, cabecera);
   }
 
-  addGrupoCabecera(cabecera: Cabecera): Observable<Cabecera> {
-    const nuevoCabecera = { ...cabecera, id: mock.length + 1 };
-    mock.push(nuevoCabecera);
-    return of(nuevoCabecera);
-    return this.http.post<Cabecera>(this.apiUrl, cabecera);
+  addGrupoCabecera(cabecera: Cabecera): Observable<ResponseDTO<Cabecera>> {
+    //const nuevoCabecera = { ...cabecera, id: mock.length + 1 };
+    //mock.push(nuevoCabecera);
+    //return of(nuevoCabecera);
+    return this.http.post<ResponseDTO<Cabecera>>(this.apiUrl, cabecera);
   }
   
   deleteGrupoCabecera(cabeceraId: number): Observable<void> {
-    return of(void 0); // Mock
+    //return of(void 0); // Mock
     return this.http.delete<void>(`${this.apiUrl}/${cabeceraId}`);
   }
 }

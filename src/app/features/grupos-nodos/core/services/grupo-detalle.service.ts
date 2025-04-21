@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Detalle } from '../interfaces/detalle.interface';
+import { ResponseDTO } from '../interfaces/responseDTO.interface';
+/*
 const mock : Detalle[]=[
   {
     "id": 1,
@@ -67,33 +69,34 @@ const mock : Detalle[]=[
     "usuario": "Alan"
   }
 ]
+*/
 @Injectable({ providedIn: 'root' })
 export class GrupoDetalleService {
-  private apiUrl = 'https://localhost:7003/api/v1/gruponodos';
+  private apiUrl = 'https://localhost:7003/api/v1/gruponodos/detalle';
 
   constructor(private http: HttpClient) {}
 
-  getGrupoDetalle(): Observable<Detalle[]> {
-    return of(mock);
-    return this.http.get<Detalle[]>(this.apiUrl);
+  getGrupoDetalle(): Observable<ResponseDTO<Detalle[]>> {
+    //return of(mock);
+    return this.http.get<ResponseDTO<Detalle[]>>(this.apiUrl);
   }
 
-  updateGrupoDetalle(detalle: Detalle): Observable<Detalle> {
-    return of({ ...detalle }); 
-    // return this.http.put<Detalle>(`${this.apiUrl}/${detalle.id}`, detalle);
+  updateGrupoDetalle(detalle: Detalle): Observable<ResponseDTO<Detalle>> {
+    //return of({ ...detalle }); 
+    return this.http.put<ResponseDTO<Detalle>>(`${this.apiUrl}/${detalle.id}`, detalle);
   }
 
-  addGrupoDetalle(detalle: Detalle): Observable<Detalle> {    
-    const nuevoDetalle = { ...detalle, id: mock.length + 1 };
-    mock.push(nuevoDetalle);
-    return of(nuevoDetalle);
-    //return this.http.post<Detalle>(this.apiUrl, detalle);
+  addGrupoDetalle(detalle: Detalle): Observable<ResponseDTO<Detalle>> {    
+    //const nuevoDetalle = { ...detalle, id: mock.length + 1 };
+    //mock.push(nuevoDetalle);
+    //return of(nuevoDetalle);
+    return this.http.post<ResponseDTO<Detalle>>(this.apiUrl, detalle);
   }
   
   deleteGrupoDetalle(nodoDestino: number): Observable<void> {
-    const index = mock.findIndex(d => d.nodoDestino === nodoDestino);
-    if (index !== -1) mock.splice(index, 1);
-    return of(void 0);
-    // return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    //const index = mock.findIndex(d => d.nodoDestino === nodoDestino);
+    //if (index !== -1) mock.splice(index, 1);
+    //return of(void 0);
+    return this.http.delete<void>(`${this.apiUrl}/${nodoDestino}`);
   }
 }

@@ -87,7 +87,6 @@ export class GrupoPaletizadoPage implements OnInit {
       .afterClosed()
       .subscribe(result => {
           if (result) {
-              console.log('Resultado del diálogo:', result);
               this.grupoPaletizadoStore.addGrupoPaletizado(result);
           }
       });
@@ -103,7 +102,6 @@ export class GrupoPaletizadoPage implements OnInit {
       .afterClosed()
       .subscribe(result => {
           if (result) {
-              console.log('Resultado del diálogo:', result);
               this.grupoCabeceraStore.addGrupoCabecera(result);
           }
       });

@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { GrupoPaletizadoService } from '../services/grupo-paletizado.service';
 import { Paletizado } from '../interfaces';
+import { ResponseDTO } from '../interfaces/responseDTO.interface';
 
 @Injectable({ providedIn: 'root' })
 export class GrupoPaletizadoStore {
@@ -11,32 +12,44 @@ export class GrupoPaletizadoStore {
 
   loadGrupoPaletizado() {
     this.loading.set(true);
-    this.grupoService.getGrupoPaletizado().subscribe({
-      next: (grupos) => {
-        this.grupoPaletizado.set(grupos);
+    this.grupoService.getGrupoPaletizado()
+      .subscribe((response: ResponseDTO<Paletizado[]>) => {
+        if (response.hasError || !Array.isArray(response.data)) {
+          this.grupoPaletizado.set([]);
+          this.loading.set(false);
+          return;
+        }        
+        this.grupoPaletizado.set(response.data);
         this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-      }
-    });
+      });
   }
 
   addGrupoPaletizado(paletizado: Paletizado) {
-    this.grupoService.addGrupoPaletizado(paletizado).subscribe((nuevo) => {
-      const yaExiste = this.grupoPaletizado().some(d => d.id === nuevo.id);
-      if (yaExiste) return;
-      this.grupoPaletizado.update((grupos) => [...grupos, nuevo]);
-    });
+    this.loading.set(true);
+    this.grupoService.addGrupoPaletizado(paletizado)
+      .subscribe((response: ResponseDTO<Paletizado>) => {
+        if (response.hasError) {
+          this.loading.set(false);
+          return;
+        }
+        this.grupoPaletizado.update((grupos) => [...grupos, response.data]);
+        this.loading.set(false);
+      });
     this.forceUpdateGrupoPaletizado();
   }
 
   updateGrupoPaletizado(paletizado: Paletizado) {
-    this.grupoService.updateGrupoPaletizado(paletizado).subscribe((actualizado) => {
-      this.grupoPaletizado.update((grupos) =>
-        grupos.map((g) => (g.id === actualizado.id ? actualizado : g))
-      );
-    });
+    this.loading.set(true);
+    this.grupoService.updateGrupoPaletizado(paletizado)
+      .subscribe((response: ResponseDTO<Paletizado>) => {
+        if (response.hasError) {
+          this.loading.set(false);
+          return;
+        }
+        this.grupoPaletizado.update((grupos) =>
+          grupos.map((g) => (g.id === response.data.id ? response.data : g))
+        );
+      });
   }
 
   forceUpdateGrupoPaletizado() {
