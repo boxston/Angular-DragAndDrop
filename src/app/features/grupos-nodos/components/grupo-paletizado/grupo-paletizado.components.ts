@@ -27,6 +27,7 @@ import { AddGrupoPaletizadoDialog } from "../dialog-add/grupo-paletizado/grupo-p
 import { AddGrupoCabeceraDialog } from "../dialog-add/grupo-cabecera/grupo-cabecera.dialog";
 import { NodoStore } from "../../core/store/nodo.store";
 import { Cabecera } from "../../core/interfaces";
+import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
 
 @Component({
     standalone: true,
@@ -129,6 +130,19 @@ export class GrupoPaletizadoPage implements OnInit {
       
       extractPaletizadoId(id: string): number {
         return +id.replace('paletizado-', '');
+    }
+
+    deletePaletizado(paletizadoId: number) {
+            this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                title: '¿Eliminar grupo paletizado?',
+                message: `¿Estás seguro que querés eliminar el paletizado #${paletizadoId}?`
+                }
+            }).afterClosed().subscribe(result => {
+                if (result) {
+                this.grupoPaletizadoStore.deleteGrupoPaletizado(paletizadoId);
+                }
+            });
     }
 
 }

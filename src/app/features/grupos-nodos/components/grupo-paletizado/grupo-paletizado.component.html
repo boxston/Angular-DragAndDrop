@@ -16,7 +16,10 @@
     </aside>
     <section>
         @for (paletizado of grupoPaletizado(); track paletizado.id) {
-            <article>
+            <article>                
+                <aside class="aside-delete">
+                    <mat-icon (click)="deletePaletizado(paletizado.id!)">cancel</mat-icon>
+                </aside>    
                 <aside>
                     <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>
                     <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id!)">

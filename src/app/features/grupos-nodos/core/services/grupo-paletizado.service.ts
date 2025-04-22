@@ -41,4 +41,9 @@ export class GrupoPaletizadoService {
     //return of(nuevoPaletizado);
     return this.http.post<ResponseDTO<Paletizado>>(this.apiUrl, paletizado);
   }
+
+  deleteGrupoPaletizado(paletizadoId: number): Observable<void> {
+    //return of(void 0); // Mock
+    return this.http.delete<void>(`${this.apiUrl}/${paletizadoId}`);
+  }
 }

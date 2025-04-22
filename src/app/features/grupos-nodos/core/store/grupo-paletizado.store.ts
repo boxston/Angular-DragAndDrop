@@ -52,6 +52,17 @@ export class GrupoPaletizadoStore {
       });
   }
 
+  deleteGrupoPaletizado(paletizadoId: number) {
+    this.loading.set(true);
+    this.grupoService.deleteGrupoPaletizado(paletizadoId)
+      .subscribe(() => {
+        this.grupoPaletizado.update((grupos) =>
+          grupos.filter((g) => g.id !== paletizadoId)
+        );
+        this.loading.set(false);
+      });
+  }
+
   forceUpdateGrupoPaletizado() {
     this.grupoPaletizado.update(val => [...val]);
   }
