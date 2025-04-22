@@ -10,8 +10,13 @@ export class GrupoDetalleStore {
   grupoDetalle = signal<Detalle[]>([]);
   loading = signal<boolean>(false);
 
+  clearGrupoDetalle() {
+    this.grupoDetalle.set([]);
+  }
+
   loadGrupoDetalle() {
     this.loading.set(true);
+    this.clearGrupoDetalle();
     this.grupoService.getGrupoDetalle()
       .subscribe((response: ResponseDTO<Detalle[]>) =>{        
         if (response.hasError || !Array.isArray(response.data)) {

@@ -1,17 +1,25 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Injector, signal } from '@angular/core';
 import { GrupoCabeceraService } from '../services/grupo-cabecera.service';
 import { Cabecera } from '../interfaces/index';
 import { ResponseDTO } from '../interfaces/responseDTO.interface';
+import { GrupoPaletizadoStore } from './grupo-paletizado.store';
+import { GrupoDetalleStore } from './grupo-detalle.store';
 
 @Injectable({ providedIn: 'root' })
 export class GrupoCabeceraStore {
   private grupoService = inject(GrupoCabeceraService);
+  private injector = inject(Injector);
 
   grupoCabecera = signal<Cabecera[]>([]);
   loading = signal<boolean>(false);
 
+  clearGrupoCabecera() {
+    this.grupoCabecera.set([]);
+  }
+
   loadGrupoCabecera() {
     this.loading.set(true);
+    this.clearGrupoCabecera()
     this.grupoService.getGrupoCabecera()
       .subscribe((response: ResponseDTO<Cabecera[]>) => {
           if (response.hasError) {
@@ -58,10 +66,15 @@ export class GrupoCabeceraStore {
   deleteGrupoCabecera(cabeceraId: number) {
     this.loading.set(true);
     this.grupoService.deleteGrupoCabecera(cabeceraId)
-      .subscribe(() => {
-        this.grupoCabecera.update((grupos) =>
-          grupos.filter((g) => g.id !== cabeceraId)
-        );
+      .subscribe(() => {        
+        const grupoPaletizadoStore = this.injector.get(GrupoPaletizadoStore);
+        grupoPaletizadoStore.loadGrupoPaletizado();
+
+        this.loadGrupoCabecera();      
+        
+        const grupoDetalleStore = this.injector.get(GrupoDetalleStore);
+        grupoDetalleStore.loadGrupoDetalle();
+
         this.loading.set(false);
       });
     this.forceUpdateGrupoCabecera();

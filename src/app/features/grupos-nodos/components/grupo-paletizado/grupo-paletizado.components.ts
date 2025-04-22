@@ -62,11 +62,13 @@ export class GrupoPaletizadoPage implements OnInit {
 
     grupoPaletizado = computed(() => {
         const query = this.searchQuery().toLowerCase().trim();
-        return this.grupoPaletizadoStore.grupoPaletizado().filter(g => {
+        let gruposPaletizados = this.grupoPaletizadoStore.grupoPaletizado().filter(g => {
             const nombreMatch = g.nombre?.toLowerCase().includes(query);
             const idMatch = g.id?.toString().includes(query);
             return nombreMatch || idMatch;
         });
+        console.log(gruposPaletizados);
+        return gruposPaletizados;
     });
 
     getListaPaletizados(): string[] {
@@ -140,7 +142,7 @@ export class GrupoPaletizadoPage implements OnInit {
                 }
             }).afterClosed().subscribe(result => {
                 if (result) {
-                this.grupoPaletizadoStore.deleteGrupoPaletizado(paletizadoId);
+                    this.grupoPaletizadoStore.deleteGrupoPaletizado(paletizadoId);
                 }
             });
     }

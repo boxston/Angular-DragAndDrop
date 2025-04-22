@@ -1,17 +1,25 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Injector, signal } from '@angular/core';
 import { GrupoPaletizadoService } from '../services/grupo-paletizado.service';
 import { Paletizado } from '../interfaces';
 import { ResponseDTO } from '../interfaces/responseDTO.interface';
+import { GrupoCabeceraStore } from './grupo-cabecera.store';
+import { GrupoDetalleStore } from './grupo-detalle.store';
 
 @Injectable({ providedIn: 'root' })
 export class GrupoPaletizadoStore {
   private grupoService = inject(GrupoPaletizadoService);
+  private injector = inject(Injector);
 
   grupoPaletizado = signal<Paletizado[]>([]);
   loading = signal<boolean>(false);
 
+  clearGrupoPaletizado() {
+    this.grupoPaletizado.set([]);
+  }
+
   loadGrupoPaletizado() {
     this.loading.set(true);
+    this.clearGrupoPaletizado();
     this.grupoService.getGrupoPaletizado()
       .subscribe((response: ResponseDTO<Paletizado[]>) => {
         if (response.hasError || !Array.isArray(response.data)) {
@@ -56,9 +64,14 @@ export class GrupoPaletizadoStore {
     this.loading.set(true);
     this.grupoService.deleteGrupoPaletizado(paletizadoId)
       .subscribe(() => {
-        this.grupoPaletizado.update((grupos) =>
-          grupos.filter((g) => g.id !== paletizadoId)
-        );
+        this.loadGrupoPaletizado();
+        
+        const grupoCabeceraStore = this.injector.get(GrupoCabeceraStore);
+        grupoCabeceraStore.loadGrupoCabecera();
+        
+        const grupoDetalleStore = this.injector.get(GrupoDetalleStore);
+        grupoDetalleStore.loadGrupoDetalle();
+
         this.loading.set(false);
       });
   }
