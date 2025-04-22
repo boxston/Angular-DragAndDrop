@@ -7,7 +7,7 @@
     [cdkDropListSortingDisabled]="true"
     (cdkDropListDropped)="dropHandler($event)"
     cdkDrag
-    [cdkDragData]="{ id, tipo: 'cabecera', grupoPaletizado }"
+    [cdkDragData]="cabecera"
 >
     <aside>
         <mat-icon (click)="deleteCabecera()">cancel</mat-icon>
@@ -16,8 +16,8 @@
     <div>
         <mat-form-field  appearance="outline">
             <mat-label>Nodo destinatario</mat-label>
-            <mat-select [value]="nodoDestinatario">                
-                @for (nodo of listNodo(); track nodo.id) {
+            <mat-select [value]="nodoDestinatario"  (selectionChange)="onNodoDestinatarioChange($event)">                
+                @for (nodo of listNodo(); track 'destinatario-' + nodo.id + '-' + $index) {
                     <mat-option [value]="nodo.nodoDestino">
                         {{nodo.nodoDestino}} - 
                         {{ nodo.nodoDescripcion && 
@@ -30,8 +30,8 @@
         </mat-form-field>
         <mat-form-field  appearance="outline">
             <mat-label>Plaza Ruteo</mat-label>
-            <mat-select [value]="plazaRuteo">
-                @for (nodo of listNodo(); track nodo.id) {
+            <mat-select [value]="plazaRuteo"  (selectionChange)="onPlazaRuteoChange($event)">
+                @for (nodo of listNodo(); track 'ruteo-' + nodo.id + '-' + $index) {
                     <mat-option [value]="nodo.nodoDestino">
                         {{nodo.nodoDestino}} - 
                         {{ nodo.nodoDescripcion && 
@@ -45,9 +45,9 @@
     </div>
     <section>        
         <mat-list>            
-            @for (detalle of grupoDetalle(); track detalle.id) {
+            @for (detalle of grupoDetalle(); track 'detalle-' + detalle.id + '-' + $index) {
                 <mat-list-item cdkDrag [cdkDragData]="detalle">
-                    <strong>#{{detalle.id}} - {{detalle.nodoCodigo}}</strong>
+                    <strong>NodoDestino: {{detalle.nodoDestino}} - Codigo: {{detalle.nodoCodigo}}</strong>
                     <p>{{detalle.nodoDescripcion}}</p>
                 </mat-list-item>
             }

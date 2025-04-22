@@ -12,6 +12,7 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import { NodoStore } from "../../core/store/nodo.store";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
+import { Cabecera } from "../../core/interfaces";
 
 @Component({
     standalone: true,
@@ -39,6 +40,7 @@ export class GrupoCabeceraPage implements OnInit {
     @Input() dropHandler!: (event: CdkDragDrop<any[]>) => void;
     
     @Input() id: number = 0;
+    @Input() cabecera: Cabecera | null = null;
     @Input() grupoPaletizado: number | null = null;   
     @Input() nodoDestinatario: number | null = null;
     @Input() plazaRuteo: number | null = null;
@@ -80,5 +82,14 @@ export class GrupoCabeceraPage implements OnInit {
             this.grupoCabeceraStore.deleteGrupoCabecera(this.id);
             }
         });
+    }
+
+    onNodoDestinatarioChange(event: any) {
+        this.nodoDestinatario = event.value;
+        this.grupoCabeceraStore.updateGrupoCabecera({ ...this.cabecera!, nodoDestinatarioId: event.value });
+    }
+    onPlazaRuteoChange(event: any) {
+        this.plazaRuteo = event.value;
+        this.grupoCabeceraStore.updateGrupoCabecera({ ...this.cabecera!, nodoPlazaRuteoId: event.value });
     }
 }

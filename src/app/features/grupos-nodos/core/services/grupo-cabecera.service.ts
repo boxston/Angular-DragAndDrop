@@ -44,7 +44,7 @@ export class GrupoCabeceraService {
 
   updateGrupoCabecera(cabecera: Cabecera): Observable<ResponseDTO<Cabecera>> {
     //return of({ ...cabecera }); 
-    return this.http.put<ResponseDTO<Cabecera>>(`${this.apiUrl}/${cabecera.id}`, cabecera);
+    return this.http.put<ResponseDTO<Cabecera>>(this.apiUrl, cabecera);
   }
 
   addGrupoCabecera(cabecera: Cabecera): Observable<ResponseDTO<Cabecera>> {

@@ -60,7 +60,7 @@ export class GrupoDetalleStore {
   deleteGrupoDetalle(nodoDestino: number) {
     this.loading.set(true);
     this.grupoService.deleteGrupoDetalle(nodoDestino).subscribe(() => {
-      this.grupoDetalle.update((grupos) => grupos.filter(g => g.nodoDestino !== nodoDestino));
+      this.grupoDetalle.update((grupos) => grupos.filter(g => g.id !== nodoDestino));
       this.forceUpdateGrupoDetalle();
     });
   }

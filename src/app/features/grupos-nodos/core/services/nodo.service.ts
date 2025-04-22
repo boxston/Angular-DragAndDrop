@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Detalle, Nodo } from '../interfaces';
+/*
 const mock: Nodo[] = [
   {
     id: 101,
@@ -175,21 +176,21 @@ const mock: Nodo[] = [
     tipo: "Tipo 1"
   }
 ];
-
+*/
 
 @Injectable({ providedIn: 'root' })
 export class NodoService {
-  private apiUrl = 'https://localhost:7003/api/v1/gruponodos';
+  private apiUrl = 'https://localhost:7003/api/v1/gruponodos/nodos';
 
   constructor(private http: HttpClient) {}
 
   getNodo(): Observable<Detalle[]> {
-    return of(mock).pipe(
+    //return of(mock).pipe(
+    //  map(nodos => nodos.map(nodo => this.transformarNodoADetalle(nodo)))
+    //);
+    return this.http.get<Nodo[]>(this.apiUrl).pipe(
       map(nodos => nodos.map(nodo => this.transformarNodoADetalle(nodo)))
     );
-    // return this.http.get<Nodo[]>(this.apiUrl).pipe(
-    //   map(nodos => nodos.map(nodo => this.transformarNodoADetalle(nodo)))
-    // );
   }
 
   private transformarNodoADetalle(nodo: Nodo): Detalle {

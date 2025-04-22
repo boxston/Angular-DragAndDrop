@@ -20,9 +20,9 @@
         </mat-form-field>
     </aside>
     <mat-list>
-        @for (nodo of nodosDisponibles(); track nodo.id) {            
+        @for (nodo of nodosDisponibles(); track 'disponible-' + nodo.id + '-' + $index) {            
             <mat-list-item cdkDrag [cdkDragData]="nodo">
-                <strong>Nodo - {{nodo.nodoCodigo}}</strong>
+                <strong>NodoDestino: {{nodo.nodoDestino}} - Codigo: {{nodo.nodoCodigo}}</strong>
                 <p>{{nodo.nodoDescripcion}}</p>
             </mat-list-item>
         }

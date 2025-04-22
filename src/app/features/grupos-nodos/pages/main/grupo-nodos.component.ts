@@ -43,23 +43,26 @@ export class GrupoNodosPage {
         
         if (previousContainer.id === 'nodos-disponibles') {                     
             const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));
+            const {id, ...nodo} = item.data;
             this.grupoDetalleStore.addGrupoDetalle({
-              ...item.data,
+              ...nodo,
               grupoCabeceraId: grupoCabeceraDestinoId
             });
             return;
         }
 
-        if (container.id === 'nodos-disponibles'){
-            this.grupoDetalleStore.deleteGrupoDetalle(item.data.nodoDestino);
+        if (container.id === 'nodos-disponibles'){            
+            this.grupoDetalleStore.deleteGrupoDetalle(item.data.id);
         };
         
         const isCabecera = (id: string) => id.startsWith('cabecera-');
         if(isCabecera(previousContainer.id) && isCabecera(container.id)) {            
-            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', ''));            
+            const grupoCabeceraDestinoId = parseInt(container.id.replace('cabecera-', '')); 
+            const {usuario, ...nodo} = item.data;     
             this.grupoDetalleStore.updateGrupoDetalle({
-              ...item.data,
-              grupoCabeceraId: grupoCabeceraDestinoId
+                ...nodo,
+                activo: true,
+                grupoCabeceraId: grupoCabeceraDestinoId
             });
         }
     }

@@ -109,16 +109,21 @@ export class GrupoPaletizadoPage implements OnInit {
 
 
     drop(event: CdkDragDrop<any>) {
-        const { container, previousContainer, item } = event;   
-        if (item.data.tipo === 'cabecera') {            
-            if (container.id !== previousContainer.id) {
-                const grupoPaletizadoId = parseInt(container.id.replace('paletizado-', ''));
-                const update: Cabecera = {
-                    ...item.data,
+        const { container, previousContainer, item } = event; 
+        console.log(item);         
+        if (container.id !== previousContainer.id) {
+            const grupoPaletizadoId = parseInt(container.id.replace('paletizado-', ''));
+            const {...cabecera} = item.data;
+            console.log( {
+                    ...cabecera,
                     grupoPaletizadoId: grupoPaletizadoId,
-                }
-                this.grupoCabeceraStore.updateGrupoCabecera(update);
-          }
+                });
+            
+            const update: Cabecera = {
+                ...cabecera,
+                grupoPaletizadoId: grupoPaletizadoId,
+            }
+            this.grupoCabeceraStore.updateGrupoCabecera(update);
         }
       }
       

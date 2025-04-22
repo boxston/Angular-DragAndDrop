@@ -83,7 +83,7 @@ export class GrupoDetalleService {
 
   updateGrupoDetalle(detalle: Detalle): Observable<ResponseDTO<Detalle>> {
     //return of({ ...detalle }); 
-    return this.http.put<ResponseDTO<Detalle>>(`${this.apiUrl}/${detalle.id}`, detalle);
+    return this.http.put<ResponseDTO<Detalle>>(this.apiUrl, detalle);
   }
 
   addGrupoDetalle(detalle: Detalle): Observable<ResponseDTO<Detalle>> {    
