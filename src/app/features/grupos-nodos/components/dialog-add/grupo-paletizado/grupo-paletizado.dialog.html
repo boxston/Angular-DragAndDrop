@@ -3,11 +3,11 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Nombre del Paletizado</mat-label>
-    <input matInput placeholder="Placeholder" [(ngModel)]="Nombre" required>
+    <input matInput placeholder="Placeholder" [(ngModel)]="Nombre" #nombreInput="ngModel" required>
   </mat-form-field>
 
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onCancelClick()">cancelar</button>
-  <button mat-flat-button (click)="onSaveClick()" cdkFocusInitial>Guardar</button>
+  <button mat-flat-button (click)="onSaveClick()" [disabled]="nombreInput.invalid"  cdkFocusInitial>Guardar</button>
 </mat-dialog-actions>

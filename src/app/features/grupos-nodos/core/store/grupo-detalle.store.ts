@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { GrupoDetalleService } from '../services/grupo-detalle.service';
 import { Detalle } from '../interfaces';
 import { ResponseDTO } from '../interfaces/responseDTO.interface';
+import { formatDateForBackend } from '../helpers/formatDateForBackend.helper';
 
 @Injectable({ providedIn: 'root' })
 export class GrupoDetalleStore {
@@ -54,6 +55,7 @@ export class GrupoDetalleStore {
         this.grupoDetalle.update((grupos) =>
           grupos.map((g) => (g.id === response.data.id ? response.data : g))
         );
+        this.loading.set(false);
         this.forceUpdateGrupoDetalle();
       });
   }
@@ -66,6 +68,7 @@ export class GrupoDetalleStore {
     this.loading.set(true);
     this.grupoService.deleteGrupoDetalle(nodoDestino).subscribe(() => {
       this.grupoDetalle.update((grupos) => grupos.filter(g => g.id !== nodoDestino));
+      this.loading.set(false);
       this.forceUpdateGrupoDetalle();
     });
   }

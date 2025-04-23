@@ -197,10 +197,9 @@ export class NodoService {
     return {
       id: nodo.id,
       nodoDestino: nodo.idNodoItem,
-      activo: nodo.activo,
       nodoCodigo: parseInt(nodo.codigo),
       nodoDescripcion: nodo.descripcion,
-      nodoTipo: nodo.idNodoTipo
+      nodoTipo: nodo.idNodoTipo,
     };
   }
 }

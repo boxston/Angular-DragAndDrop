@@ -22,9 +22,17 @@
                 </aside>    
                 <aside>
                     <h4>#{{paletizado.id}} - {{paletizado.nombre}} </h4>
-                    <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id!)">
-                        <mat-icon>add</mat-icon>
-                    </button>
+                    <div style="display: flex; align-items: center;">
+                        <button mat-mini-fab color="primary"  (click)="openDialogGrupoCabecera(paletizado.id!)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <mat-slide-toggle
+                            [checked]="paletizado.activo"
+                            (change)="
+                                updateActivoGrupoPaletizado(paletizado)
+                            ">
+                        </mat-slide-toggle>
+                    </div>
                 </aside>
                 <section
                     cdkDropList

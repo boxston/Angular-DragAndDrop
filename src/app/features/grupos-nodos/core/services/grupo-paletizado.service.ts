@@ -32,7 +32,7 @@ export class GrupoPaletizadoService {
 
   updateGrupoPaletizado(paletizado: Paletizado): Observable<ResponseDTO<Paletizado>> {
     //return of({ ...paletizado }); 
-    return this.http.put<ResponseDTO<Paletizado>>(`${this.apiUrl}/${paletizado.id}`, paletizado);
+    return this.http.put<ResponseDTO<Paletizado>>(`${this.apiUrl}`, paletizado);
   }
 
   addGrupoPaletizado(paletizado: Paletizado): Observable<ResponseDTO<Paletizado>> {

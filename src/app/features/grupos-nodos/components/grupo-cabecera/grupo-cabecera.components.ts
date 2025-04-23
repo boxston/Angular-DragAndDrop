@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, computed, inject, Input, OnInit } from "@angular/core";
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -13,6 +13,7 @@ import { NodoStore } from "../../core/store/nodo.store";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
 import { Cabecera } from "../../core/interfaces";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
     standalone: true,
@@ -28,7 +29,8 @@ import { Cabecera } from "../../core/interfaces";
         MatInputModule,
         MatList,
         MatListItem,
-        MatSelectModule
+        MatSelectModule,
+        MatSlideToggleModule
     ],
     templateUrl: './grupo-cabecera.component.html',
     styleUrls: ['./grupo-cabecera.component.scss'],
@@ -69,6 +71,14 @@ export class GrupoCabeceraPage implements OnInit {
         return ["nodos-disponibles"].concat(
             cabeceras.map(c => 'cabecera-' + c.id)
         );
+    }
+
+    updateActivoGrupoCabecera() {
+        const update: Cabecera = {
+            ...this.cabecera!,
+            activo: !this.cabecera?.activo
+        };
+        this.grupoCabeceraStore.updateGrupoCabecera(update);
     }
 
     deleteCabecera() {

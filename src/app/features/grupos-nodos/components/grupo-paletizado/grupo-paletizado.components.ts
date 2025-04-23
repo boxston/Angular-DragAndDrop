@@ -18,16 +18,16 @@ import {
   GrupoCabeceraStore,
   GrupoPaletizadoStore
 } from "../../core/store";
-import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import {
   MatDialog,
-  MatDialogModule,
 } from '@angular/material/dialog';
 import { AddGrupoPaletizadoDialog } from "../dialog-add/grupo-paletizado/grupo-paletizado.dialog";
 import { AddGrupoCabeceraDialog } from "../dialog-add/grupo-cabecera/grupo-cabecera.dialog";
 import { NodoStore } from "../../core/store/nodo.store";
-import { Cabecera } from "../../core/interfaces";
+import { Cabecera, Paletizado } from "../../core/interfaces";
 import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
     standalone: true,
@@ -41,7 +41,8 @@ import { ConfirmDialogComponent } from "../dialog/confirm.dialog";
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSlideToggleModule
 ],
     templateUrl: './grupo-paletizado.component.html',
     styleUrls: ['./grupo-paletizado.component.scss'],
@@ -67,7 +68,6 @@ export class GrupoPaletizadoPage implements OnInit {
             const idMatch = g.id?.toString().includes(query);
             return nombreMatch || idMatch;
         });
-        console.log(gruposPaletizados);
         return gruposPaletizados;
     });
 
@@ -83,6 +83,14 @@ export class GrupoPaletizadoPage implements OnInit {
         return computed(() =>
           this.grupoCabeceraStore.grupoCabecera().filter(g => g.grupoPaletizadoId === paletizadoId)
         );
+    }
+
+    updateActivoGrupoPaletizado(grupoPaletizado: Paletizado) {
+        const update: Paletizado = {
+            ...grupoPaletizado,
+            activo: !grupoPaletizado.activo
+        };
+        this.grupoPaletizadoStore.updateGrupoPaletizado(update);
     }
 
     openDialogGrupoPaletizado() {
@@ -112,16 +120,10 @@ export class GrupoPaletizadoPage implements OnInit {
 
 
     drop(event: CdkDragDrop<any>) {
-        const { container, previousContainer, item } = event; 
-        console.log(item);         
+        const { container, previousContainer, item } = event;      
         if (container.id !== previousContainer.id) {
             const grupoPaletizadoId = parseInt(container.id.replace('paletizado-', ''));
             const {...cabecera} = item.data;
-            console.log( {
-                    ...cabecera,
-                    grupoPaletizadoId: grupoPaletizadoId,
-                });
-            
             const update: Cabecera = {
                 ...cabecera,
                 grupoPaletizadoId: grupoPaletizadoId,

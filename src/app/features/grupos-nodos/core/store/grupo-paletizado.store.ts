@@ -49,7 +49,7 @@ export class GrupoPaletizadoStore {
   updateGrupoPaletizado(paletizado: Paletizado) {
     this.loading.set(true);
     this.grupoService.updateGrupoPaletizado(paletizado)
-      .subscribe((response: ResponseDTO<Paletizado>) => {
+      .subscribe((response: ResponseDTO<Paletizado>) => {        
         if (response.hasError) {
           this.loading.set(false);
           return;
@@ -57,6 +57,7 @@ export class GrupoPaletizadoStore {
         this.grupoPaletizado.update((grupos) =>
           grupos.map((g) => (g.id === response.data.id ? response.data : g))
         );
+        this.loading.set(false);
       });
   }
 

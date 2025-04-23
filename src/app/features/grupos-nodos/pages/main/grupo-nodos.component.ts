@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, computed, effect, inject, signal } from "@angular/core";
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { FormsModule } from "@angular/forms";
@@ -7,6 +7,7 @@ import { GrupoCabeceraStore, GrupoDetalleStore, GrupoPaletizadoStore } from "../
 import { GrupoPaletizadoPage } from "../../components/grupo-paletizado/grupo-paletizado.components";
 import { GrupoNodoPage } from "../../components/grupo-nodo/grupo-nodo.components";
 import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     standalone: true,
@@ -27,9 +28,26 @@ export class GrupoNodosPage {
     grupoPaletizadoStore = inject(GrupoPaletizadoStore);
     grupoCabeceraStore= inject(GrupoCabeceraStore);
     grupoDetalleStore = inject(GrupoDetalleStore);
+    private _snackBar = inject(MatSnackBar);
     
     dropListGroupIds: string[] = [];
     searchQuery: string = ""; 
+
+    loadingPaletizado = this.grupoPaletizadoStore.loading;   
+    loadingCabecera = this.grupoCabeceraStore.loading;
+    loadingDetalle = this.grupoDetalleStore.loading;   
+
+    loadingGeneral = computed(() =>
+        this.loadingPaletizado() || this.loadingCabecera() || this.loadingDetalle()
+    );
+
+    readonly watchLoading = effect(() => {
+        if (this.loadingGeneral()) {
+            this._snackBar.open('Sincronizando...', 'Cerrar');
+        } else {
+            this._snackBar.dismiss();
+        }
+    });
 
     ngOnInit() {
         this.grupoPaletizadoStore.loadGrupoPaletizado();

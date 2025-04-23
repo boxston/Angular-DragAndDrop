@@ -11,8 +11,16 @@
 >
     <aside>
         <mat-icon (click)="deleteCabecera()">cancel</mat-icon>
-    </aside>    
-    <h3>#{{id}} - Grupo Nodo</h3>
+    </aside>
+    <header>
+        <h3>Grupo: {{id}}</h3>
+        <mat-slide-toggle
+            [checked]="cabecera?.activo"
+            (change)="
+                updateActivoGrupoCabecera()
+            ">
+        </mat-slide-toggle>
+    </header>
     <div>
         <mat-form-field  appearance="outline">
             <mat-label>Nodo destinatario</mat-label>
@@ -47,8 +55,14 @@
         <mat-list>            
             @for (detalle of grupoDetalle(); track 'detalle-' + detalle.id + '-' + $index) {
                 <mat-list-item cdkDrag [cdkDragData]="detalle">
-                    <strong>NodoDestino: {{detalle.nodoDestino}} - Codigo: {{detalle.nodoCodigo}}</strong>
-                    <p>{{detalle.nodoDescripcion}}</p>
+                    <strong>{{detalle.nodoTipo == 1 ? 'SUC' : 'CD'}}: {{detalle.nodoCodigo}}</strong>
+                    <p>
+                        {{  detalle.nodoDescripcion &&
+                            detalle.nodoDescripcion.length > 18 ?
+                            detalle.nodoDescripcion.slice(0, 18) + '...' :
+                            detalle.nodoDescripcion
+                        }}
+                    </p>
                 </mat-list-item>
             }
         </mat-list>

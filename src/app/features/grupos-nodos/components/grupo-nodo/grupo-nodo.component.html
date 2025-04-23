@@ -22,7 +22,7 @@
     <mat-list>
         @for (nodo of nodosDisponibles(); track 'disponible-' + nodo.id + '-' + $index) {            
             <mat-list-item cdkDrag [cdkDragData]="nodo">
-                <strong>NodoDestino: {{nodo.nodoDestino}} - Codigo: {{nodo.nodoCodigo}}</strong>
+                <strong>{{nodo.nodoTipo == 1 ? 'SUC' : 'CD'}}: {{nodo.nodoCodigo}}</strong>
                 <p>{{nodo.nodoDescripcion}}</p>
             </mat-list-item>
         }
